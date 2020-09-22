@@ -8,10 +8,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import api from '../services';
+import { useStore } from '../store';
 
 const Header = () => {
     const [anchorEle, setAnchorEle] = React.useState(null);
     const [addressInput, setAddressInput] = React.useState('2502 buffalo pass austin texas');
+    const store = useStore();
 
     const handleClose = event => {
         console.log(`Clicked ${event.target.id}`)
@@ -26,8 +28,9 @@ const Header = () => {
         setAddressInput(event.target.value);
     }
 
-    const searchByAddress = () => {
-        api.checkAddress(addressInput);
+    const searchByAddress = async () => {
+        let result = await api.checkAddress(addressInput);
+        store.processAddressLookup(result)
     }
 
     return (

@@ -50,7 +50,6 @@ const checkAddressInput = async input => {
             });
     }
     console.timeEnd('address');
-    console.log(result);
     return result;
 }
 
