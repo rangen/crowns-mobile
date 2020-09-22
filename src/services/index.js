@@ -37,21 +37,23 @@ const checkAddressInput = async input => {
     } else {
         console.error('Malformed Address. Please try again.');
     }
-    if (result.state && result.cd) {
-        let promises = [];
-        promises.push(getDistrictData(result.state, result.cd));
-        if (!['CA', 'CT', 'FL', 'HI', 'IN', 'MD', 'MO', 'NV', 'NY', 'ND', 'OH', 'PA', 'UT', 'VT', 'WA', 'WI'].includes(result.state)) {
-            promises.push(getStateData(result.state));
-        }
-        await Promise.all(promises)
-            .then(values=> {
-                result.reps = values[0].reps;
-                values[1] && (result.senators = values[1].senators);
-            });
-    }
     console.timeEnd('address');
     return result;
 }
+//     if (result.state && result.cd) {
+//         let promises = [];
+//         promises.push(getDistrictData(result.state, result.cd));
+//         if (!['CA', 'CT', 'FL', 'HI', 'IN', 'MD', 'MO', 'NV', 'NY', 'ND', 'OH', 'PA', 'UT', 'VT', 'WA', 'WI'].includes(result.state)) {
+//             promises.push(getStateData(result.state));
+//         }
+//         await Promise.all(promises)
+//             .then(values=> {
+//                 result.reps = values[0].reps;
+//                 values[1] && (result.senators = values[1].senators);
+//             });
+//     }
+//     return result;
+// }
 
 export default {
     getDistrictData:    getDistrictData,

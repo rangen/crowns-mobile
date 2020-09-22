@@ -4,10 +4,19 @@ import { action, observable, computed } from 'mobx';
 export default class Store {
     @observable addressInfo = {};
 
-    @action processAddressLookup(data) {
-        this.addressInfo = data.addressInfo;
-        this.reps = data.reps;
-        this.senators = data.senators;
+    @action processAddressLookup(result) {
+        if (result.ok) {
+            this.addressInfo = {
+                valid:      true,
+                state:      result.state,
+                district:   result.district
+            }
+        } else {
+            this.addressInfo = {
+                error:  true,
+                valid:  false
+            }
+        }
     };
 
     @computed get districtLoaded() {

@@ -8,12 +8,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import api from '../services';
+import { observer } from 'mobx-react';
 import { useStore } from '../store';
 
-const Header = () => {
+const Header = observer(() => {
     const [anchorEle, setAnchorEle] = React.useState(null);
     const [addressInput, setAddressInput] = React.useState('2502 buffalo pass austin texas');
     const store = useStore();
+    const addressError = store.addressInfo.error;
 
     const handleClose = event => {
         console.log(`Clicked ${event.target.id}`)
@@ -30,7 +32,7 @@ const Header = () => {
 
     const searchByAddress = async () => {
         let result = await api.checkAddress(addressInput);
-        store.processAddressLookup(result)
+        store.processAddressLookup(result);
     }
 
     return (
@@ -40,7 +42,14 @@ const Header = () => {
                 <IconButton edge='start' onClick={handleClick}>
                     <MenuIcon />
                 </IconButton>
-                <TextField value={addressInput} onChange={handleChange} placeholder='Enter street address'fullWidth variant='outlined'/>
+                <TextField 
+                    value={addressInput} 
+                    onChange={handleChange} 
+                    placeholder='Enter street address'
+                    fullWidth
+                    error={addressError}
+                    helperText={addressError ? 'Could not locate address' : ''} 
+                    variant='outlined'/>
                 <IconButton>
                     <SearchIcon onClick={searchByAddress} />
                 </IconButton>
@@ -62,7 +71,7 @@ const Header = () => {
         </AppBar>
         </>
     );
-}
+});
 
 export default Header;
 
