@@ -8,7 +8,9 @@ const MainContainer = observer(() => {
 
     return (
         <>
-            {store.district && `District: ${store.state}-${store.district}`}
+            <h4>
+                {store.polygonLoaded && 'Shapes!'}
+            </h4>
         </>
     );
 });

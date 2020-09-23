@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, observable, flow } from 'mobx';
+import { action, observable, flow, computed } from 'mobx';
 import api from '../services';
 
 export default class Store {
@@ -9,6 +9,9 @@ export default class Store {
     @observable retrievingData = false;
     @observable state = null;
     @observable district = null;
+    @observable reps = [];
+    @observable senators = [];
+    @observable geoJSON = {};
 
     checkAddress = flow(function* () {
         const store = this;
@@ -20,6 +23,7 @@ export default class Store {
         if (addressReply.ok) {
             store.state = addressReply.state;
             store.district = addressReply.cd;
+            store.normalizedAddress = addressReply.normalizedAddress;
             store.getDistrictData();
             store.getStateData();
             store.getDistrictGeoJSON();
@@ -32,19 +36,31 @@ export default class Store {
     @action setAddressInput(data) {
         this.addressInput = data;
         this.addressError = false;
+        this.state = null;
+        this.district = null;
+        this.normalizedAddress = '';
+        this.reps = [];
+        this.senators = [];
+        this.geoJSON = {};
     }
 
-    @action getDistrictData() {
-        api.getDistrictData(this.state, this.district);
+    @action async getDistrictData() {
+        this.reps = await api.getDistrictData(this.state, this.district);
     }
 
-    @action getStateData() {
-        api.getStateData(this.state);
+    @action async getStateData() {
+        this.senators = api.getStateData(this.state);
     }
 
-    @action getDistrictGeoJSON() {
-        api.getDistrictGeoJSON(this.state, this.district);
+    @action async getDistrictGeoJSON() {
+        this.geoJSON = await api.getDistrictGeoJSON(this.state, this.district);
     }
+
+    @computed get senatorsLoaded() {return !!this.senators.length}
+
+    @computed get repsLoaded() {return !!this.reps.length}
+
+    @computed get polygonLoaded() {return !!this.geoJSON.geometry}
 }
 
 const StoreContext = React.createContext();

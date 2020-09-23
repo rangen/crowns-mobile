@@ -3,13 +3,13 @@ const JSON_BUCKET = 'https://pile-of-crowns.s3.us-east-2.amazonaws.com/'
 const getDistrictData = async (state, district) => {
     let response = await fetch(JSON_BUCKET.concat(`${state}-${district}.json`));
     let json = await response.json();
-    return json;
+    return json.reps;
 }
 
 const getStateData = async state => {
     let response = await fetch(JSON_BUCKET.concat(`${state}.json`));
     let json = await response.json();
-    return json;
+    return json.senators;
 }
 const getDistrictGeoJSON = async (state, district) => {
     let response = await fetch(JSON_BUCKET.concat(`districts/${state}-${district}/shape.geojson`));
@@ -25,6 +25,9 @@ const checkAddressInput = async input => {
 
     if (response.ok) {
         let json = await response.json();
+        const {line1, city, state, zip} = json.normalizedInput;
+        result.normalizedAddress = `${line1}  ${city}, ${state} ${zip}`
+
         let divisions = Object.keys(json.divisions).map(d=>d.slice(d.lastIndexOf('/') + 1));
 
         divisions.forEach(i=>{
