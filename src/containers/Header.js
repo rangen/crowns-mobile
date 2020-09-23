@@ -40,7 +40,7 @@ const Header = observer(() => {
                     <MenuIcon />
                 </IconButton>
                 {store.addressResolved && <Typography>
-                    {store.normalizedAddress}
+                    {store.addressRegion}
                     </Typography>}
                 {!store.addressResolved && <TextField 
                     value={store.addressInput} 
@@ -52,8 +52,8 @@ const Header = observer(() => {
                     helperText={addressError ? 'Could not locate address' : ''} 
                     variant='outlined'
                     size='small'/>}
-                <IconButton disabled={appBusy}>
-                    <SearchIcon onClick={store.checkAddress} />
+                <IconButton onClick={store.checkAddress} disabled={appBusy}>
+                    <SearchIcon />
                 </IconButton>
                 <Menu
                     anchorEl={anchorEle}

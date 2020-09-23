@@ -4,15 +4,14 @@ import { useStore } from '../store';
 import DistrictMap from '../components/DistrictMap';
 
 
-const MainContainer = observer(() => {
+const MainContainer = () => {
     const store = useStore();
 
     return (
-        <>
-            {`Map script is loaded: ${store.mapScriptLoaded}`}
+        <div style={{margin: '10px 0'}}>
             <DistrictMap />
-        </>
+        </div>
     );
-});
+};
 
 export default MainContainer;

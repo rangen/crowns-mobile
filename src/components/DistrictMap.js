@@ -1,11 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import { useStore } from '../store';
 
-const DistrictMap = () => {
+const DistrictMap = observer(() => {
     const store = useStore();
 
     React.useEffect(() => {
-        console.log(`Running effect: ${store.mapScriptLoaded}`)
         if (store.mapScriptLoaded) {
             store.gMap = new window.google.maps.Map(document.getElementById('google-map'), {
                 center: {
@@ -23,9 +23,9 @@ const DistrictMap = () => {
 
     return (
         <>
-            <div id='google-map' style={{width: '100%', height: '90vh'}}/>
+            <div id='google-map' style={{width: '100%', height: '85vh'}}/>
         </>
     )
-}
+});
 
 export default DistrictMap;

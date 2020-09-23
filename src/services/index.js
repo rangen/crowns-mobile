@@ -28,7 +28,14 @@ const checkAddressInput = async input => {
         const {line1, city, state, zip} = json.normalizedInput;
         result.normalizedAddress = `${line1}  ${city}, ${state} ${zip}`
 
-        let divisions = Object.keys(json.divisions).map(d=>d.slice(d.lastIndexOf('/') + 1));
+        const divisionKeys = Object.keys(json.divisions)
+
+        // Google formats XXXXXXX's Congressional District or <State> for us
+        // Object keys not predictable but the longest key is the most specific (state + district > state)
+        const mostGranularKey = divisionKeys.reduce((res, ele)=>{if (ele.length > res.length) res = ele; return res;}, '')
+        result.addressRegion = json.divisions[mostGranularKey].name
+        
+        let divisions = divisionKeys.map(d=>d.slice(d.lastIndexOf('/') + 1));
 
         divisions.forEach(i=>{
             let [type, value] = i.split(':');
@@ -40,6 +47,7 @@ const checkAddressInput = async input => {
         } else if (['DE', 'VT', 'WY', 'MT', 'ND', 'AK', 'SD'].includes(result.state)) {
             result.cd = '0';
             result.ok = true;
+            result.addressRegion += "'s At-Large District"
         }
     } else {
         console.error('Malformed Address. Please try again.');

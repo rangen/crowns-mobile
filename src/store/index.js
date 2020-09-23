@@ -14,6 +14,7 @@ export default class Store {
     @observable geoJSON = {};
     @observable mapScriptLoaded = false;
     gMap = null;
+    addressRegion = '';
 
     checkAddress = flow(function* () {
         const store = this;
@@ -26,6 +27,7 @@ export default class Store {
             store.state = addressReply.state;
             store.district = addressReply.cd;
             store.normalizedAddress = addressReply.normalizedAddress;
+            store.addressRegion = addressReply.addressRegion;
             store.getDistrictData();
             store.getStateData();
             store.getDistrictGeoJSON();
@@ -41,9 +43,10 @@ export default class Store {
         this.state = null;
         this.district = null;
         this.normalizedAddress = '';
+        this.addressRegion = '';
         this.reps = [];
         this.senators = [];
-        this.geoJSON = {};
+        this.geoJSON = null;
     }
 
     @action async getDistrictData() {
@@ -62,13 +65,14 @@ export default class Store {
 
     @computed get repsLoaded() {return !!this.reps.length}
 
-    @computed get polygonLoaded() {return !!this.geoJSON.geometry}
+    @computed get polygonLoaded() {return !!this.geoJSON}
     
     @computed get addressResolved() {return !!this.normalizedAddress}
 
     drawDistrict = reaction(
         () => this.geoJSON, geoJSON => {
-        this.gMap.data.addGeoJson(this.geoJSON)
+        if (!geoJSON) return;
+        this.gMap.data.addGeoJson(geoJSON)
 
         let bounds = new window.google.maps.LatLngBounds(); 
         
