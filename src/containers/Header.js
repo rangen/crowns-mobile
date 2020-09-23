@@ -32,6 +32,11 @@ const Header = observer(() => {
         store.setAddressInput(event.target.value);
     }
 
+    const handleReset = () => {
+        store.setAddressInput();
+        store.gMap.data.forEach((f)=>store.gMap.data.remove(f))
+    }
+
     return (
         <>
         <AppBar position="static" color='primary'>
@@ -52,10 +57,11 @@ const Header = observer(() => {
                     helperText={addressError ? 'Could not locate address' : ''} 
                     variant='outlined'
                     size='small'/>}
+                {/* Conditionally have editable field + search icon or Resolved Result + edit icon */}
                 {!store.addressResolved && <IconButton onClick={store.checkAddress} disabled={appBusy}>
                     <SearchIcon />
                 </IconButton>}
-                {store.addressResolved && <IconButton onClick={store.checkAddress} disabled={appBusy}>
+                {store.addressResolved && <IconButton onClick={handleReset} disabled={appBusy}>
                     <EditIcon />
                 </IconButton>}
                 <Menu

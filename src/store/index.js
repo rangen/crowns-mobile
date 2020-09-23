@@ -37,7 +37,7 @@ export default class Store {
 
     }).bind(this);
 
-    @action setAddressInput(data) {
+    @action setAddressInput(data = '') {
         this.addressInput = data;
         this.addressError = false;
         this.state = null;
