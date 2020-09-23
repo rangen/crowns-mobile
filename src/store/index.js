@@ -12,6 +12,8 @@ export default class Store {
     @observable reps = [];
     @observable senators = [];
     @observable geoJSON = {};
+    @observable mapScriptLoaded = false;
+    gMap = null;
 
     checkAddress = flow(function* () {
         const store = this;
@@ -61,6 +63,8 @@ export default class Store {
     @computed get repsLoaded() {return !!this.reps.length}
 
     @computed get polygonLoaded() {return !!this.geoJSON.geometry}
+    
+    @computed get addressResolved() {return !!this.normalizedAddress}
 }
 
 const StoreContext = React.createContext();

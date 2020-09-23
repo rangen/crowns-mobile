@@ -6,6 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import { observer } from 'mobx-react';
 import { useStore } from '../store';
@@ -38,7 +39,10 @@ const Header = observer(() => {
                 <IconButton edge='start' onClick={handleClick}>
                     <MenuIcon />
                 </IconButton>
-                <TextField 
+                {store.addressResolved && <Typography>
+                    {store.normalizedAddress}
+                    </Typography>}
+                {!store.addressResolved && <TextField 
                     value={store.addressInput} 
                     onChange={handleChange} 
                     placeholder='Enter street address'
@@ -47,7 +51,7 @@ const Header = observer(() => {
                     error={addressError}
                     helperText={addressError ? 'Could not locate address' : ''} 
                     variant='outlined'
-                    size='small'/>
+                    size='small'/>}
                 <IconButton disabled={appBusy}>
                     <SearchIcon onClick={store.checkAddress} />
                 </IconButton>
