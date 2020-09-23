@@ -8,9 +8,7 @@ const MainContainer = observer(() => {
 
     return (
         <>
-            <h4>
-                {store.polygonLoaded && 'Shapes!'}
-            </h4>
+            Main Container stuff;
         </>
     );
 });

@@ -56,13 +56,19 @@ const Header = observer(() => {
                     keepMounted
                     open={Boolean(anchorEle)}>
                     <MenuItem onClick={handleClose} id="menuAbout">
-                        About
+                        Home
                     </MenuItem>
-                    <MenuItem onClick={handleClose} id="menuSenators">
+                    {store.polygonLoaded && <MenuItem onClick={handleClose} id="menuMap">
+                        View District
+                    </MenuItem>}
+                    {store.senatorsLoaded && <MenuItem onClick={handleClose} id="menuSenators">
                         Senators
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} id="menuReps">
+                    </MenuItem>}
+                    {store.repsLoaded && <MenuItem onClick={handleClose} id="menuReps">
                         Reps
+                    </MenuItem>}
+                    <MenuItem onClick={handleClose} id="menuDonate">
+                        Donate
                     </MenuItem>
                 </Menu>
             </Toolbar>

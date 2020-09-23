@@ -49,7 +49,7 @@ export default class Store {
     }
 
     @action async getStateData() {
-        this.senators = api.getStateData(this.state);
+        this.senators = await api.getStateData(this.state);
     }
 
     @action async getDistrictGeoJSON() {
