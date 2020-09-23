@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, observable, flow, computed } from 'mobx';
+import { action, observable, flow, computed, reaction } from 'mobx';
 import api from '../services';
 
 export default class Store {
@@ -65,6 +65,22 @@ export default class Store {
     @computed get polygonLoaded() {return !!this.geoJSON.geometry}
     
     @computed get addressResolved() {return !!this.normalizedAddress}
+
+    drawDistrict = reaction(
+        () => this.geoJSON, geoJSON => {
+        this.gMap.data.addGeoJson(this.geoJSON)
+
+        let bounds = new window.google.maps.LatLngBounds(); 
+        
+        this.gMap.data.forEach(function(feature){
+            feature.getGeometry().forEachLatLng(function(latlng){
+                bounds.extend(latlng);
+            });
+        });
+
+        this.gMap.fitBounds(bounds);
+        }
+    );
 }
 
 const StoreContext = React.createContext();
