@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
+import EditIcon from '@material-ui/icons/Edit';
 import { observer } from 'mobx-react';
 import { useStore } from '../store';
 
@@ -31,7 +32,6 @@ const Header = observer(() => {
         store.setAddressInput(event.target.value);
     }
 
-    console.log('Header rendered.')
     return (
         <>
         <AppBar position="static" color='primary'>
@@ -52,9 +52,12 @@ const Header = observer(() => {
                     helperText={addressError ? 'Could not locate address' : ''} 
                     variant='outlined'
                     size='small'/>}
-                <IconButton onClick={store.checkAddress} disabled={appBusy}>
+                {!store.addressResolved && <IconButton onClick={store.checkAddress} disabled={appBusy}>
                     <SearchIcon />
-                </IconButton>
+                </IconButton>}
+                {store.addressResolved && <IconButton onClick={store.checkAddress} disabled={appBusy}>
+                    <EditIcon />
+                </IconButton>}
                 <Menu
                     anchorEl={anchorEle}
                     keepMounted

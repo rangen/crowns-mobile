@@ -33,7 +33,7 @@ const checkAddressInput = async input => {
         // Google formats XXXXXXX's Congressional District or <State> for us
         // Object keys not predictable but the longest key is the most specific (state + district > state)
         const mostGranularKey = divisionKeys.reduce((res, ele)=>{if (ele.length > res.length) res = ele; return res;}, '')
-        result.addressRegion = json.divisions[mostGranularKey].name
+        result.addressRegion = json.divisions[mostGranularKey].name.replace(' congressional', '');
         
         let divisions = divisionKeys.map(d=>d.slice(d.lastIndexOf('/') + 1));
 
