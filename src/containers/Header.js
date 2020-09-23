@@ -7,15 +7,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
-import api from '../services';
 import { observer } from 'mobx-react';
 import { useStore } from '../store';
 
 const Header = observer(() => {
     const [anchorEle, setAnchorEle] = React.useState(null);
-    const [addressInput, setAddressInput] = React.useState('2502 buffalo pass austin texas');
+    
     const store = useStore();
-    const addressError = store.addressInfo.error;
+    const addressError = store.addressError;
+    const appBusy = store.checkingAddress || store.retrievingData;
 
     const handleClose = event => {
         console.log(`Clicked ${event.target.id}`)
@@ -27,14 +27,10 @@ const Header = observer(() => {
     }
 
     const handleChange = event => {
-        setAddressInput(event.target.value);
+        store.setAddressInput(event.target.value);
     }
 
-    const searchByAddress = async () => {
-        let result = await api.checkAddress(addressInput);
-        store.processAddressLookup(result);
-    }
-
+    console.log('Header rendered.')
     return (
         <>
         <AppBar position="static" color='primary'>
@@ -43,15 +39,17 @@ const Header = observer(() => {
                     <MenuIcon />
                 </IconButton>
                 <TextField 
-                    value={addressInput} 
+                    value={store.addressInput} 
                     onChange={handleChange} 
                     placeholder='Enter street address'
                     fullWidth
+                    disabled={appBusy}
                     error={addressError}
                     helperText={addressError ? 'Could not locate address' : ''} 
-                    variant='outlined'/>
-                <IconButton>
-                    <SearchIcon onClick={searchByAddress} />
+                    variant='outlined'
+                    size='small'/>
+                <IconButton disabled={appBusy}>
+                    <SearchIcon onClick={store.checkAddress} />
                 </IconButton>
                 <Menu
                     anchorEl={anchorEle}

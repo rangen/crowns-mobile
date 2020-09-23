@@ -11,7 +11,11 @@ const getStateData = async state => {
     let json = await response.json();
     return json;
 }
-
+const getDistrictGeoJSON = async (state, district) => {
+    let response = await fetch(JSON_BUCKET.concat(`districts/${state}-${district}/shape.geojson`));
+    let json = await response.json();
+    return json;
+}
 
 const checkAddressInput = async input => {
     console.time('address')
@@ -56,6 +60,8 @@ const checkAddressInput = async input => {
 // }
 
 export default {
+    getStateData:       getStateData,
     getDistrictData:    getDistrictData,
-    checkAddress:       checkAddressInput
+    checkAddress:       checkAddressInput,
+    getDistrictGeoJSON: getDistrictGeoJSON
 }

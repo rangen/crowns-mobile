@@ -1,26 +1,49 @@
 import React from 'react';
-import { action, observable, computed } from 'mobx';
+import { action, observable, flow } from 'mobx';
+import api from '../services';
 
 export default class Store {
-    @observable addressInfo = {};
+    @observable normalizedAddress = '';
+    @observable addressInput = '2502 buffalo pass austin tx';
+    @observable checkingAddress = false;
+    @observable retrievingData = false;
+    @observable state = null;
+    @observable district = null;
 
-    @action processAddressLookup(result) {
-        if (result.ok) {
-            this.addressInfo = {
-                valid:      true,
-                state:      result.state,
-                district:   result.district
-            }
+    checkAddress = flow(function* () {
+        const store = this;
+
+        store.checkingAddress = true;
+        const addressReply = yield api.checkAddress(store.addressInput);
+        store.checkingAddress = false;
+
+        if (addressReply.ok) {
+            store.state = addressReply.state;
+            store.district = addressReply.cd;
+            store.getDistrictData();
+            store.getStateData();
+            store.getDistrictGeoJSON();
         } else {
-            this.addressInfo = {
-                error:  true,
-                valid:  false
-            }
+            store.addressError = true;
         }
-    };
 
-    @computed get districtLoaded() {
-        return !!this.addressInfo.normalized;
+    }).bind(this);
+
+    @action setAddressInput(data) {
+        this.addressInput = data;
+        this.addressError = false;
+    }
+
+    @action getDistrictData() {
+        api.getDistrictData(this.state, this.district);
+    }
+
+    @action getStateData() {
+        api.getStateData(this.state);
+    }
+
+    @action getDistrictGeoJSON() {
+        api.getDistrictGeoJSON(this.state, this.district);
     }
 }
 

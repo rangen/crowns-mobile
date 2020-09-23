@@ -8,7 +8,7 @@ const MainContainer = observer(() => {
 
     return (
         <>
-            {store.districtLoaded && "District Loaded!"}
+            {store.district && `District: ${store.state}-${store.district}`}
         </>
     );
 });
