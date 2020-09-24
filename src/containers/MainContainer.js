@@ -1,17 +1,24 @@
 import React from 'react';
-// import { observer } from 'mobx-react';
-// import { useStore } from '../store';
+import { Switch, Route } from 'react-router-dom';
+import { observer } from 'mobx-react';
+import { useStore } from '../store';
 import DistrictMap from '../components/DistrictMap';
 
 
-const MainContainer = () => {
-    // const store = useStore();
+const MainContainer = observer(() => {
+    const store = useStore();
 
     return (
         <div style={{margin: '10px 0'}}>
-            <DistrictMap />
+            <div style={{display: (store.currentPage === 'map' ? 'inline' : 'none')}} >
+                <DistrictMap />
+            </div>
+            <Route path='/map'>
+            </Route>
+            <Switch>
+            </Switch>
         </div>
     );
-};
+});
 
 export default MainContainer;

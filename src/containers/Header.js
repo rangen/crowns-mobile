@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,6 +13,7 @@ import { useStore } from '../store';
 
 const Header = observer(() => {    
     const store = useStore();
+    const history = useHistory();
     const addressError = store.addressError;
     const appBusy = store.checkingAddress || store.retrievingData;
 
@@ -22,6 +24,12 @@ const Header = observer(() => {
     const handleReset = () => {
         store.setAddressInput();
         store.gMap.data.forEach((f)=>store.gMap.data.remove(f))
+    }
+
+    const handleSearch = () => {
+        history.push('/map');
+        store.setPage('map');
+        store.checkAddress();
     }
 
     return (
@@ -45,7 +53,7 @@ const Header = observer(() => {
                     variant='outlined'
                     size='small'/>}
                 {/* Conditionally have editable field + search icon or Resolved Result + edit icon */}
-                {!store.addressResolved && <IconButton onClick={store.checkAddress} disabled={appBusy}>
+                {!store.addressResolved && <IconButton onClick={handleSearch} disabled={appBusy}>
                     <SearchIcon />
                 </IconButton>}
                 {store.addressResolved && <IconButton onClick={handleReset} disabled={appBusy}>
