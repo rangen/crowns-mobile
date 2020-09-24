@@ -52,6 +52,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",
@@ -141,8 +142,18 @@
       "react-app"
     ],
     "plugins": [
-      ["@babel/plugin-proposal-decorators", { "legacy": true }],
-      ["@babel/plugin-proposal-class-properties", { "loose": true }]
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ]
     ]
   },
   "devDependencies": {

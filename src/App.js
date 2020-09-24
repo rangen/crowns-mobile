@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import MenuDrawer from './components/MenuDrawer';
 import Header from './containers/Header';
 import MainContainer from './containers/MainContainer';
@@ -20,9 +21,11 @@ export default function App() {
 
   return (
     <StoreProvider store={store}>
-      <Header />
-      <MainContainer />
-      <MenuDrawer />
+      <Router>
+        <Header />
+        <MainContainer />
+        <MenuDrawer />
+      </Router>
     </StoreProvider>
   );
 }

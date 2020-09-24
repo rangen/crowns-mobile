@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MailIcon from '@material-ui/icons/Mail';
 import MapIcon from '@material-ui/icons/Map';
+import LocalAtm from '@material-ui/icons/LocalAtm';
 import MenuSelection from './MenuSelection';
 
 const useStyles = makeStyles({
@@ -26,9 +27,11 @@ const MenuDrawer = observer(() => {
         <div className={classes.list}>
             <Drawer anchor='top' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
               <List>
-    <MenuSelection text='Home' icon={<MailIcon/>} value='home' />
+                <MenuSelection text='Home' icon={<MailIcon/>} value='home' />
                 <Divider />
-    <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
+                <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
+                <Divider />
+                <MenuSelection text='Support' icon={<LocalAtm/>} value='support'/>
               </List>
             </Drawer>
         </div>
