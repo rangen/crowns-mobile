@@ -14,6 +14,7 @@ export default class Store {
     @observable geoJSON = null;
     @observable mapScriptLoaded = false;
     @observable menuOpen = false;
+    @observable currentPage = 'home'; //home map donate politician
     
     gMap = null;
     addressRegion = '';
@@ -61,6 +62,14 @@ export default class Store {
 
     @action async getDistrictGeoJSON() {
         this.geoJSON = await api.getDistrictGeoJSON(this.state, this.district);
+    }
+
+    @action setPage(value) {
+        this.menuOpen = false;
+        if (value !== this.currentPage) {
+            this.currentPage = value;
+            console.log(`Switching to page ${value}`)
+        }
     }
 
     @computed get senatorsLoaded() {return !!this.senators.length}
