@@ -1,4 +1,5 @@
 import React from 'react';
+import MenuDrawer from './components/MenuDrawer';
 import Header from './containers/Header';
 import MainContainer from './containers/MainContainer';
 import Store, { StoreProvider } from './store';
@@ -21,6 +22,7 @@ export default function App() {
     <StoreProvider store={store}>
       <Header />
       <MainContainer />
+      <MenuDrawer />
     </StoreProvider>
   );
 }

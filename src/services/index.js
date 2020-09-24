@@ -8,6 +8,7 @@ const getDistrictData = async (state, district) => {
 
 const getStateData = async state => {
     let response = await fetch(JSON_BUCKET.concat(`${state}.json`));
+    if (!response.ok) return [];  //Refactor to not check for non-Senate voting states
     let json = await response.json();
     return json.senators;
 }
@@ -55,20 +56,6 @@ const checkAddressInput = async input => {
     console.timeEnd('address');
     return result;
 }
-//     if (result.state && result.cd) {
-//         let promises = [];
-//         promises.push(getDistrictData(result.state, result.cd));
-//         if (!['CA', 'CT', 'FL', 'HI', 'IN', 'MD', 'MO', 'NV', 'NY', 'ND', 'OH', 'PA', 'UT', 'VT', 'WA', 'WI'].includes(result.state)) {
-//             promises.push(getStateData(result.state));
-//         }
-//         await Promise.all(promises)
-//             .then(values=> {
-//                 result.reps = values[0].reps;
-//                 values[1] && (result.senators = values[1].senators);
-//             });
-//     }
-//     return result;
-// }
 
 export default {
     getStateData:       getStateData,

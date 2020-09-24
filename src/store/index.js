@@ -4,15 +4,17 @@ import api from '../services';
 
 export default class Store {
     @observable normalizedAddress = '';
-    @observable addressInput = '2502 buffalo pass austin tx';
+    @observable addressInput = '5205 buffalo pass austin texas';
     @observable checkingAddress = false;
     @observable retrievingData = false;
     @observable state = null;
     @observable district = null;
     @observable reps = [];
     @observable senators = [];
-    @observable geoJSON = {};
+    @observable geoJSON = null;
     @observable mapScriptLoaded = false;
+    @observable menuOpen = false;
+    
     gMap = null;
     addressRegion = '';
 
