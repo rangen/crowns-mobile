@@ -25,13 +25,14 @@ const MenuDrawer = observer(() => {
 
     return (
         <div className={classes.list}>
-            <Drawer anchor='top' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
+            <Drawer anchor='left' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
               <List>
                 <MenuSelection text='Home' icon={<MailIcon/>} value='home' />
                 <Divider />
                 <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
                 <Divider />
                 <MenuSelection text='Support' icon={<LocalAtm/>} value='support'/>
+                <MenuSelection text='About this Site' icon={<LocalAtm/>} value='about'/>
               </List>
             </Drawer>
         </div>

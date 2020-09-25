@@ -1,6 +1,7 @@
 import React from 'react';
 import { action, observable, flow, computed, reaction } from 'mobx';
 import api from '../services';
+import noSenate from '../misc/noSenateElection';
 
 export default class Store {
     @observable normalizedAddress = '';
@@ -14,7 +15,7 @@ export default class Store {
     @observable geoJSON = null;
     @observable mapScriptLoaded = false;
     @observable menuOpen = false;
-    @observable currentPage = 'home'; //home map donate politician
+    @observable currentPage = 'home'; //home map support politician
     
     gMap = null;
     addressRegion = '';
@@ -31,20 +32,25 @@ export default class Store {
             store.district = addressReply.cd;
             store.normalizedAddress = addressReply.normalizedAddress;
             store.addressRegion = addressReply.addressRegion;
-            store.getDistrictData();
-            store.getStateData();
-            store.getDistrictGeoJSON();
+            store.fetchS3Data();
         } else {
             store.addressError = true;
         }
 
     }).bind(this);
 
+    @action fetchS3Data() {
+        this.getDistrictData();
+        this.getDistrictGeoJSON();
+        if (noSenate.includes(this.state)) return;
+        this.getStateData();
+    }
+
     @action setAddressInput(data = '') {
         this.addressInput = data;
         this.addressError = false;
         this.state = null;
-        this.district = null;
+        this.district = null; 
         this.normalizedAddress = '';
         this.addressRegion = '';
         this.reps = [];
@@ -68,7 +74,6 @@ export default class Store {
         this.menuOpen = false;
         if (value !== this.currentPage) {
             this.currentPage = value;
-            console.log(`Switching to page ${value}`)
         }
     }
 
