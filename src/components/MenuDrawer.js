@@ -6,9 +6,12 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MailIcon from '@material-ui/icons/Mail';
+import AboutIcon from '@material-ui/icons/HelpOutline';
 import MapIcon from '@material-ui/icons/Map';
 import LocalAtm from '@material-ui/icons/LocalAtm';
 import MenuSelection from './MenuSelection';
+import RepMenu from './RepMenu';
+import SenatorMenu from './SenatorMenu';
 
 const useStyles = makeStyles({
     list:   {
@@ -35,8 +38,17 @@ const MenuDrawer = observer(() => {
                         <Divider />
                     </>
                 }
+                {store.senatorsLoaded && 
+                    <SenatorMenu/>
+                }
+                {store.repsLoaded && 
+                    <>
+                        <RepMenu/>
+                        <Divider/>
+                    </>
+                }
                 <MenuSelection text='Support' icon={<LocalAtm/>} value='support'/>
-                <MenuSelection text='About this Site' icon={<LocalAtm/>} value='about'/>
+                <MenuSelection text='About this Site' icon={<AboutIcon/>} value='about'/>
               </List>
             </Drawer>
         </div>
