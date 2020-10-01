@@ -2,6 +2,7 @@ import React from 'react';
 import { action, observable, flow, computed, reaction } from 'mobx';
 import api from '../services';
 import noSenate from '../misc/noSenateElection';
+import cookIndices from '../misc/cookIndices';
 
 export default class Store {
     @observable normalizedAddress = '';
@@ -13,7 +14,6 @@ export default class Store {
     @observable reps = [];
     @observable senators = [];
     @observable geoJSON = null;
-    @observable mapScriptLoaded = false;
     @observable menuOpen = false;
     @observable currentPage = 'home'; //home map support politician
     
@@ -32,6 +32,7 @@ export default class Store {
             store.district = addressReply.cd;
             store.normalizedAddress = addressReply.normalizedAddress;
             store.addressRegion = addressReply.addressRegion;
+            window.history.pushState({}, null, `/district/${store.state}/${store.district}`)
             store.fetchS3Data();
         } else {
             store.addressError = true;
@@ -40,6 +41,8 @@ export default class Store {
     }).bind(this);
 
     @action fetchS3Data() {
+        const districtIndex = cookIndices.find(x=>x['Dist'] === `${this.state}-${this.district}`)
+        this.districtColor = this.fillColor(districtIndex.PVI);
         this.getDistrictData();
         this.getDistrictGeoJSON();
         if (noSenate.includes(this.state)) return;
@@ -88,6 +91,13 @@ export default class Store {
     drawDistrict = reaction(
         () => this.geoJSON, geoJSON => {
         if (!geoJSON) return;
+        this.gMap.data.setStyle(() => {
+            return {
+              fillColor: this.districtColor,
+              strokeColor: this.districtColor,
+              strokeWeight: 2
+            }
+          })
         this.gMap.data.addGeoJson(geoJSON)
 
         let bounds = new window.google.maps.LatLngBounds(); 
@@ -101,6 +111,29 @@ export default class Store {
         this.gMap.fitBounds(bounds);
         }
     );
+
+    fillColor = (cookIndex) => {
+        let index;
+    
+        if (cookIndex === 'EVEN' || cookIndex === null) {return '#AAAAAA'}
+    
+        let [party, num] = cookIndex.split("+")
+        const colors = ['#AAAAAA', '#F37381', '#EE384C', '#BE2839', '#AAAAAA', '#70A1D1', '#347ABE', '#265C91']
+    
+        num = +num
+        if (num <= 5) {
+            index = 0
+        } else if (num <= 12) {
+            index = 1
+        } else if (num <= 25 ) {
+            index = 2
+        } else {
+            index = 3
+        }
+        if (party === 'D') {index += 4}
+    
+        return colors[index]
+    }
 }
 
 const StoreContext = React.createContext();

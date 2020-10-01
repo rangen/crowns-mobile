@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,7 +12,6 @@ import { useStore } from '../store';
 
 const Header = observer(() => {    
     const store = useStore();
-    const history = useHistory();
     const addressError = store.addressError;
     const appBusy = store.checkingAddress || store.retrievingData;
 
@@ -27,7 +25,6 @@ const Header = observer(() => {
     }
 
     const handleSearch = () => {
-        history.push('/map');
         store.setPage('map');
         store.checkAddress();
     }

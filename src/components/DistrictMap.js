@@ -6,7 +6,7 @@ const DistrictMap = observer(() => {
     const store = useStore();
 
     React.useEffect(() => {
-        if (store.mapScriptLoaded) {
+        if (window.google) {
             store.gMap = new window.google.maps.Map(document.getElementById('google-map'), {
                 center: {
                     lat: 41.2672,
@@ -19,7 +19,7 @@ const DistrictMap = observer(() => {
                 disableDefaultUI: true
             });
         };
-    }, [store.gMap, store.mapScriptLoaded]);
+    }, [store.gMap]);
 
     return (
         <>
