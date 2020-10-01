@@ -29,8 +29,12 @@ const MenuDrawer = observer(() => {
               <List>
                 <MenuSelection text='Home' icon={<MailIcon/>} value='home' />
                 <Divider />
-                <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
-                <Divider />
+                {store.addressResolved && 
+                    <>
+                        <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
+                        <Divider />
+                    </>
+                }
                 <MenuSelection text='Support' icon={<LocalAtm/>} value='support'/>
                 <MenuSelection text='About this Site' icon={<LocalAtm/>} value='about'/>
               </List>

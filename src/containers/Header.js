@@ -36,7 +36,7 @@ const Header = observer(() => {
                 <IconButton edge='start' onClick={()=>store.menuOpen = true}>
                     <MenuIcon />
                 </IconButton>
-                {store.addressResolved && <Typography>
+                {store.addressRegion && <Typography>
                     {store.addressRegion}
                     </Typography>}
                 {!store.addressResolved && <TextField 

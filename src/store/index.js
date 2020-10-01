@@ -16,9 +16,9 @@ export default class Store {
     @observable geoJSON = null;
     @observable menuOpen = false;
     @observable currentPage = 'home'; //home map support politician
+    @observable addressRegion = null;
     
     gMap = null;
-    addressRegion = '';
 
     checkAddress = flow(function* () {
         const store = this;
@@ -50,12 +50,14 @@ export default class Store {
     }
 
     @action setAddressInput(data = '') {
+        this.setPage('home');
+        window.history.pushState({}, null, '/');
         this.addressInput = data;
         this.addressError = false;
         this.state = null;
         this.district = null; 
         this.normalizedAddress = '';
-        this.addressRegion = '';
+        this.addressRegion = null;
         this.reps = [];
         this.senators = [];
         this.geoJSON = null;
@@ -86,7 +88,7 @@ export default class Store {
 
     @computed get polygonLoaded() {return !!this.geoJSON}
     
-    @computed get addressResolved() {return !!this.normalizedAddress}
+    @computed get addressResolved() {return !!this.addressRegion}
 
     drawDistrict = reaction(
         () => this.geoJSON, geoJSON => {
