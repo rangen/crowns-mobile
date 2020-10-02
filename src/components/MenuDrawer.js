@@ -9,6 +9,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import AboutIcon from '@material-ui/icons/HelpOutline';
 import MapIcon from '@material-ui/icons/Map';
 import LocalAtm from '@material-ui/icons/LocalAtm';
+import VoteIcon from '@material-ui/icons/HowToVote';
 import MenuSelection from './MenuSelection';
 import RepMenu from './RepMenu';
 import SenatorMenu from './SenatorMenu';
@@ -30,14 +31,16 @@ const MenuDrawer = observer(() => {
         <div className={classes.list}>
             <Drawer anchor='left' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
               <List>
-                <MenuSelection text='Home' icon={<MailIcon/>} value='home' />
+                <MenuSelection text='pileofcrowns.org' value='home' />
                 <Divider />
+                <MenuSelection text='Find Polling Places' icon={<VoteIcon/>} value='polling'/>
                 {store.addressResolved && 
                     <>
                         <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
                         <Divider />
                     </>
                 }
+
                 {store.senatorsLoaded && 
                     <SenatorMenu/>
                 }
