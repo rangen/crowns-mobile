@@ -17,6 +17,7 @@ export default class Store {
     @observable menuOpen = false;
     @observable currentPage = 'home'; //home map support politician
     @observable addressRegion = null;
+    @observable selectedPolitician = null;
     
     gMap = null;
 

@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import MailIcon from '@material-ui/icons/Mail';
 import AboutIcon from '@material-ui/icons/HelpOutline';
 import MapIcon from '@material-ui/icons/Map';
 import LocalAtm from '@material-ui/icons/LocalAtm';
@@ -33,10 +32,14 @@ const MenuDrawer = observer(() => {
               <List>
                 <MenuSelection text='pileofcrowns.org' value='home' />
                 <Divider />
+                <Divider />
+                <Divider />
                 <MenuSelection text='Find Polling Places' icon={<VoteIcon/>} value='polling'/>
                 {store.addressResolved && 
                     <>
                         <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
+                        <Divider />
+                        <Divider />
                         <Divider />
                     </>
                 }

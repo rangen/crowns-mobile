@@ -17,14 +17,12 @@ const App = () => {
     const path = location.pathname.split('/').filter(item=>item);
 
     if (path.length > 2 && path[0] === 'district' && validDistricts.includes(`${path[1]}-${path[2]}`)) {
-      console.log('Match!')
       store.setPage('map');
       store.state = path[1];
       store.district = path[2];
       store.addressRegion = buildDistrictString(path[1], path[2]);
       store.fetchS3Data();
     } else {
-      console.log('No match!')
       window.history.pushState({}, null, '/')
     }
   }, [location.pathname]);

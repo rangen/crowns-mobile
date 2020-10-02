@@ -5,10 +5,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const MenuSelection = observer(({ key, icon, text, value }) => {
+const MenuSelection = observer(({ key, icon, secIcon, text, value, politician }) => {
     const store = useStore();
 
     const handleClick = () => {
+        if (politician) {
+            store.selectedPolitician = politician.isSenator ? store.senators.find(s=>s.id === politician.id) : store.reps.find(r=>r.id === politician.id);
+        };
         store.setPage(value);
     }
 
@@ -18,6 +21,9 @@ const MenuSelection = observer(({ key, icon, text, value }) => {
                 {icon}
             </ListItemIcon>
             <ListItemText primary={text}/>
+            <ListItemIcon>
+                {secIcon}
+            </ListItemIcon>
         </ListItem>
     );
 });
