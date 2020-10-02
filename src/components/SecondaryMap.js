@@ -19,34 +19,27 @@ const SecondaryMap = observer(() => {
                 disableDefaultUI: true
             });
         };
-        if (store.mapSecondaryView === 'polling' && store.pollingPlaces) {
-            let bounds = new window.google.maps.LatLngBounds();
-            store.pollingPlaceMarkers = [];
+        let mapMarkers;
 
-            for (let [index, place] of store.pollingPlaces.entries()) {
-                const markerPosition = {lat:    place.latitude, lng:    place.longitude}
-                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
-                const newMarker = new window.google.maps.Marker({
-                    position:   markerPosition,
-                    title:      place.address.locationName,
-                    label:      `${index + 1}`,
-                    map:        store.pollingMap
-                });
-                store.pollingPlaceMarkers.push(newMarker);
-
-                const newInfoWindow = new window.google.maps.InfoWindow({
-                    content:    markerMessage,
-                    maxWidth:   300
-                });
-                newMarker.addListener('click', ()=> {
-                    newInfoWindow.open(store.pollingMap, newMarker);
-                })
-                bounds.extend(markerPosition);
-            }
-
-            store.pollingMap.fitBounds(bounds);
+        switch (store.mapSecondaryView) {
+            case 'earlyvoting':
+                mapMarkers = store.earlyVoteMarkers;
+                break;
+            case 'dropoff':
+                mapMarkers = store.dropOffMarkers;
+                break;
+            default:
+                mapMarkers = store.pollingPlaceMarkers;
         }
-    }, [store.mapSecondaryView, store.pollingMap, store.pollingPlaces, store.pollingPlaceMarkers]);
+        
+        let bounds = new window.google.maps.LatLngBounds();
+        for (let marker of mapMarkers) {
+            bounds.extend(marker.position);
+            window.setTimeout(()=>marker.setMap(store.pollingMap), 333);
+        }
+        store.pollingMap.fitBounds(bounds);
+        
+    }, [store.mapSecondaryView, store.pollingMap, store.pollingPlaceMarkers, store.dropOffMarkers, store.earlyVoteMarkers]);
 
     return (
         <>

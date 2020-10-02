@@ -13,7 +13,15 @@ const MenuSelection = observer(({ keyName, icon, secIcon, text, value, politicia
             store.selectedPolitician = politician.isSenator ? store.senators.find(s=>s.id === politician.id) : store.reps.find(r=>r.id === politician.id);
         };
         if (['polling', 'earlyvoting', 'dropoff'].includes(value)) {
-            store.mapSecondaryView = value;
+            if (value !== store.mapSecondaryView) {
+                //Clear other markers off map
+                for (let set of [store.pollingPlaceMarkers, store.earlyVoteMarkers, store.dropOffMarkers]) {
+                    for (let marker of set) {
+                        marker.setMap(null);
+                    }
+                }
+                store.mapSecondaryView = value;
+            }
             value = 'secondarymap';
         }
         store.setPage(value);

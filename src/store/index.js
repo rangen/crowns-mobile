@@ -19,17 +19,20 @@ export default class Store {
     @observable currentPage = 'home'; //home map support politician
     @observable addressRegion = null;
     @observable selectedPolitician = null;
-    @observable earlyVotingSites = null;
     @observable stateVotingInfo = null;
+
+    @observable earlyVotingSites = null;
     @observable dropOffLocations = null;
     @observable pollingPlaces = null;
+    
     @observable mapSecondaryView = null;  //polling earlyvoting dropoff
 
+    @observable pollingPlaceMarkers = [];
+    @observable earlyVoteMarkers = [];
+    @observable dropOffMarkers = [];
+    
     gMap = null;
     pollingMap = null;
-    pollingPlaceMarkers = [];
-    earlyVoteMarkers = [];
-    dropOffMarkers = [];
 
     checkAddress = flow(function* () {
         const store = this;
@@ -62,6 +65,7 @@ export default class Store {
         store.stateVotingInfo = voterInfoResponse.state && voterInfoResponse.state[0] && voterInfoResponse.state[0].electionAdministrationBody;
         store.pollingPlaces = voterInfoResponse.pollingLocations;
         store.dropOffLocations = voterInfoResponse.dropOffLocations;
+        store.createMarkers();
     }).bind(this);
 
     @action fetchS3Data() {
@@ -85,6 +89,10 @@ export default class Store {
         this.reps = [];
         this.senators = [];
         this.geoJSON = null;
+        this.mapSecondaryView = null;
+        this.earlyVoteMarkers = [];
+        this.pollingPlaceMarkers = [];
+        this.dropOffMarkers = [];
     }
 
     @action async getDistrictData() {
@@ -100,8 +108,10 @@ export default class Store {
     }
 
     @action setPage(value) {
-        this.menuOpen = false;
-        if (value !== this.currentPage) {
+        const store = this;
+        store.menuOpen = false;
+        
+        if (value !== store.currentPage) {
             this.currentPage = value;
         }
     }
@@ -168,6 +178,73 @@ export default class Store {
         if (party === 'D') {index += 4}
     
         return colors[index]
+    }
+
+    createMarkers = () => {
+        const store = this;
+
+        if (store.pollingPlaces) {
+            for (let [index, place] of store.pollingPlaces.entries()) {
+                const markerPosition = {lat:    place.latitude, lng:    place.longitude}
+                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
+                const newMarker = new window.google.maps.Marker({
+                    position:   markerPosition,
+                    title:      place.address.locationName,
+                    label:      `${index + 1}`,
+                    animation:  window.google.maps.Animation.DROP
+                });
+                store.pollingPlaceMarkers.push(newMarker);
+                const newInfoWindow = new window.google.maps.InfoWindow({
+                    content:    markerMessage,
+                    maxWidth:   300
+                });
+                newMarker.addListener('click', ()=> {
+                    newInfoWindow.open(store.pollingMap, newMarker);
+                });
+            };
+        }
+
+        if (store.dropOffLocations) {
+            for (let [index, place] of store.dropOffLocations.entries()) {
+                const markerPosition = {lat:    place.latitude, lng:    place.longitude}
+                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
+                const newMarker = new window.google.maps.Marker({
+                    position:   markerPosition,
+                    title:      place.address.locationName,
+                    label:      `${index + 1}`,
+                    animation:  window.google.maps.Animation.DROP
+                });
+                store.dropOffMarkers.push(newMarker);
+                const newInfoWindow = new window.google.maps.InfoWindow({
+                    content:    markerMessage,
+                    maxWidth:   300
+                });
+                newMarker.addListener('click', ()=> {
+                    newInfoWindow.open(store.pollingMap, newMarker);
+                });
+            };
+        }
+
+        if (store.earlyVotingSites) {
+            for (let [index, place] of store.earlyVotingSites.entries()) {
+                const markerPosition = {lat:    place.latitude, lng:    place.longitude}
+                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&origin=${store.normalizedAddress || ''}&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
+                const newMarker = new window.google.maps.Marker({
+                    position:   markerPosition,
+                    title:      place.address.locationName,
+                    label:      `${index + 1}`,
+                    animation:  window.google.maps.Animation.DROP
+                });
+                store.earlyVoteMarkers.push(newMarker);
+                const newInfoWindow = new window.google.maps.InfoWindow({
+                    content:    markerMessage,
+                    maxWidth:   300
+                });
+                newMarker.addListener('click', ()=> {
+                    newInfoWindow.open(store.pollingMap, newMarker);
+                });
+            };
+        }
     }
 }
 
