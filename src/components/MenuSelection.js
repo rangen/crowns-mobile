@@ -12,6 +12,10 @@ const MenuSelection = observer(({ keyName, icon, secIcon, text, value, politicia
         if (politician) {
             store.selectedPolitician = politician.isSenator ? store.senators.find(s=>s.id === politician.id) : store.reps.find(r=>r.id === politician.id);
         };
+        if (['polling', 'earlyvoting', 'dropoff'].includes(value)) {
+            store.mapSecondaryView = value;
+            value = 'secondarymap';
+        }
         store.setPage(value);
     }
 

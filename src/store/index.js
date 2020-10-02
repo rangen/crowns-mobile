@@ -7,7 +7,7 @@ import states from '../misc/states';
 
 export default class Store {
     @observable normalizedAddress = '';
-    @observable addressInput = '5205 buffalo pass austin texas';
+    @observable addressInput = '3920 Tennyson St, Denver, CO 80212';
     @observable checkingAddress = false;
     @observable retrievingData = false;
     @observable state = null;
@@ -21,8 +21,15 @@ export default class Store {
     @observable selectedPolitician = null;
     @observable earlyVotingSites = null;
     @observable stateVotingInfo = null;
+    @observable dropOffLocations = null;
+    @observable pollingPlaces = null;
+    @observable mapSecondaryView = null;  //polling earlyvoting dropoff
 
     gMap = null;
+    pollingMap = null;
+    pollingPlaceMarkers = [];
+    earlyVoteMarkers = [];
+    dropOffMarkers = [];
 
     checkAddress = flow(function* () {
         const store = this;
@@ -53,6 +60,8 @@ export default class Store {
         const voterInfoResponse = yield api.checkVoterInfo(store.normalizedAddress || states[store.state]);
         store.earlyVotingSites = voterInfoResponse.earlyVoteSites;
         store.stateVotingInfo = voterInfoResponse.state && voterInfoResponse.state[0] && voterInfoResponse.state[0].electionAdministrationBody;
+        store.pollingPlaces = voterInfoResponse.pollingLocations;
+        store.dropOffLocations = voterInfoResponse.dropOffLocations;
     }).bind(this);
 
     @action fetchS3Data() {
@@ -108,6 +117,11 @@ export default class Store {
     @computed get hasEarlyVotingSites() {return !!this.earlyVotingSites}
 
     @computed get hasStateVotingInfo() {return !!this.stateVotingInfo}
+
+    @computed get hasPollingPlaces() {return !!this.pollingPlaces}
+
+    @computed get hasDropOffLocations() {return !!this.dropOffLocations}
+
 
     drawDistrict = reaction(
         () => this.geoJSON, geoJSON => {

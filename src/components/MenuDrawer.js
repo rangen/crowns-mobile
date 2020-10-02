@@ -34,10 +34,24 @@ const MenuDrawer = observer(() => {
                 <Divider />
                 <Divider />
                 <Divider />
-                <MenuSelection text='Find Polling Places' icon={<VoteIcon/>} value='polling'/>
                 {store.hasStateVotingInfo &&
                     <>
                         <MenuSelection text={`${store.state} Voting Resources`} value='resources'/>
+                    </>
+                }
+                {store.hasDropOffLocations &&
+                    <>
+                        <MenuSelection text={'Ballot Drop Off Locations'} value='dropoff'/>
+                    </>
+                }
+                {store.hasEarlyVotingSites &&
+                    <>
+                        <MenuSelection text={'Early Voting Sites'} value='earlyvoting'/>
+                    </>
+                }
+                {store.hasPollingPlaces &&
+                    <>
+                        <MenuSelection text={'Nov 3rd Polling Places'} value='polling'/>
                     </>
                 }
                 {store.addressResolved && 
