@@ -4,6 +4,7 @@ import { useStore } from '../store';
 import DistrictMap from '../components/DistrictMap';
 import Politician from './Politician';
 import Donate from './Donate';
+import VotingResources from '../components/VotingResources';
 
 const MainContainer = observer(() => {
     const store = useStore();
@@ -18,6 +19,7 @@ const MainContainer = observer(() => {
             {store.currentPage === 'politician' && <><Politician/></>}
             {store.currentPage === 'polling' && <>Polling!</>}
             {store.currentPage === 'about' && <>About yada yada!</>}
+            {store.currentPage === 'resources' && <VotingResources/>}
         </div>
     );
 });

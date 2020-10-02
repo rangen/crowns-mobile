@@ -35,6 +35,11 @@ const MenuDrawer = observer(() => {
                 <Divider />
                 <Divider />
                 <MenuSelection text='Find Polling Places' icon={<VoteIcon/>} value='polling'/>
+                {store.hasStateVotingInfo &&
+                    <>
+                        <MenuSelection text={`${store.state} Voting Resources`} value='resources'/>
+                    </>
+                }
                 {store.addressResolved && 
                     <>
                         <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
@@ -45,11 +50,18 @@ const MenuDrawer = observer(() => {
                 }
 
                 {store.senatorsLoaded && 
-                    <SenatorMenu/>
+                    <>
+                        <SenatorMenu/>
+                        <Divider/>
+                        <Divider/>
+                        <Divider/>
+                    </>
                 }
                 {store.repsLoaded && 
                     <>
                         <RepMenu/>
+                        <Divider/>
+                        <Divider/>
                         <Divider/>
                     </>
                 }

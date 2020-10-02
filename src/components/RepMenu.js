@@ -16,7 +16,7 @@ const RepMenu = () => {
                 </ListItemIcon>
                 <ListItemText primary='Representatives'/>
             </ListItem>
-            {store.reps.map(r=><MenuSelection text={r.candidate_name} value='politician' secIcon={r.incumbent === 'I' ? <StarIcon/> : null} politician={{isSenator:  false, id:  r.id}}/>)}
+            {store.reps.map(r=><MenuSelection text={r.candidate_name} keyName={`r${r.id}`} value='politician' secIcon={r.incumbent === 'I' ? <StarIcon/> : null} politician={{isSenator:  false, id:  r.id}}/>)}
         </>
     )
 }

@@ -21,6 +21,8 @@ const App = () => {
       store.state = path[1];
       store.district = path[2];
       store.addressRegion = buildDistrictString(path[1], path[2]);
+      store.addressInput = '';
+      store.getVoterInfo();
       store.fetchS3Data();
     } else {
       window.history.pushState({}, null, '/')

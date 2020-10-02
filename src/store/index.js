@@ -3,6 +3,7 @@ import { action, observable, flow, computed, reaction } from 'mobx';
 import api from '../services';
 import noSenate from '../misc/noSenateElection';
 import cookIndices from '../misc/cookIndices';
+import states from '../misc/states';
 
 export default class Store {
     @observable normalizedAddress = '';
@@ -18,7 +19,9 @@ export default class Store {
     @observable currentPage = 'home'; //home map support politician
     @observable addressRegion = null;
     @observable selectedPolitician = null;
-    
+    @observable earlyVotingSites = null;
+    @observable stateVotingInfo = null;
+
     gMap = null;
 
     checkAddress = flow(function* () {
@@ -34,11 +37,22 @@ export default class Store {
             store.normalizedAddress = addressReply.normalizedAddress;
             store.addressRegion = addressReply.addressRegion;
             window.history.pushState({}, null, `/district/${store.state}/${store.district}`)
+
+            yield store.getVoterInfo();
+
             store.fetchS3Data();
         } else {
             store.addressError = true;
         }
 
+    }).bind(this);
+
+    getVoterInfo = flow(function* () {
+        const store = this;
+
+        const voterInfoResponse = yield api.checkVoterInfo(store.normalizedAddress || states[store.state]);
+        store.earlyVotingSites = voterInfoResponse.earlyVoteSites;
+        store.stateVotingInfo = voterInfoResponse.state && voterInfoResponse.state[0] && voterInfoResponse.state[0].electionAdministrationBody;
     }).bind(this);
 
     @action fetchS3Data() {
@@ -90,6 +104,10 @@ export default class Store {
     @computed get polygonLoaded() {return !!this.geoJSON}
     
     @computed get addressResolved() {return !!this.addressRegion}
+
+    @computed get hasEarlyVotingSites() {return !!this.earlyVotingSites}
+
+    @computed get hasStateVotingInfo() {return !!this.stateVotingInfo}
 
     drawDistrict = reaction(
         () => this.geoJSON, geoJSON => {

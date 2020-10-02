@@ -18,6 +18,12 @@ const getDistrictGeoJSON = async (state, district) => {
     return json;
 }
 
+const checkVoterInfo = async (address) => {
+    let response = await fetch(`https://www.googleapis.com/civicinfo/v2/voterinfo?key=${process.env.REACT_APP_GOOGLE_CIVIC}&electionId=7000&address=${address}`);
+    let json = response.json();
+    return json;
+}
+
 const checkAddressInput = async input => {
     console.time('address')
     let result = {ok: false};
@@ -61,5 +67,6 @@ export default {
     getStateData:       getStateData,
     getDistrictData:    getDistrictData,
     checkAddress:       checkAddressInput,
-    getDistrictGeoJSON: getDistrictGeoJSON
+    getDistrictGeoJSON: getDistrictGeoJSON,
+    checkVoterInfo:     checkVoterInfo
 }

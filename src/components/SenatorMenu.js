@@ -16,7 +16,7 @@ const SenatorMenu = () => {
                 </ListItemIcon>
                 <ListItemText primary='Senators'/>
             </ListItem>
-            {store.senators.map(s=><MenuSelection text={s.candidate_name} value='politician' secIcon={s.incumbent === 'I' ? <StarIcon/> : null} politician={{isSenator:  true, id:  s.id}}/>)}
+            {store.senators.map(s=><MenuSelection text={s.candidate_name} keyName={`s${s.id}`} value='politician' secIcon={s.incumbent === 'I' ? <StarIcon/> : null} politician={{isSenator:  true, id:  s.id}}/>)}
         </>
     )
 }

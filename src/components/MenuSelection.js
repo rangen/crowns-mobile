@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const MenuSelection = observer(({ key, icon, secIcon, text, value, politician }) => {
+const MenuSelection = observer(({ keyName, icon, secIcon, text, value, politician }) => {
     const store = useStore();
 
     const handleClick = () => {
@@ -16,7 +16,7 @@ const MenuSelection = observer(({ key, icon, secIcon, text, value, politician })
     }
 
     return (
-        <ListItem key={key} button onClick={handleClick}>
+        <ListItem key={keyName} button onClick={handleClick}>
             <ListItemIcon>
                 {icon}
             </ListItemIcon>
