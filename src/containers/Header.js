@@ -54,7 +54,7 @@ const Header = observer(() => {
                     <SearchIcon />
                 </IconButton>}
                 {store.addressResolved && <IconButton onClick={handleReset} disabled={appBusy}>
-                    <EditIcon />
+                    <EditIcon style={{color: '#121858'}} />
                 </IconButton>}
                 
             </Toolbar>

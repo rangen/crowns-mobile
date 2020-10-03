@@ -186,7 +186,7 @@ export default class Store {
         if (store.pollingPlaces) {
             for (let [index, place] of store.pollingPlaces.entries()) {
                 const markerPosition = {lat:    place.latitude, lng:    place.longitude}
-                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
+                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&origin=${store.normalizedAddress || ''}&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
                 const newMarker = new window.google.maps.Marker({
                     position:   markerPosition,
                     title:      place.address.locationName,
@@ -207,7 +207,7 @@ export default class Store {
         if (store.dropOffLocations) {
             for (let [index, place] of store.dropOffLocations.entries()) {
                 const markerPosition = {lat:    place.latitude, lng:    place.longitude}
-                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
+                const markerMessage = `<b>${place.address.locationName}</b><br/>${place.address.line1}<br/>${place.pollingHours}<br/><a href='https://www.google.com/maps/dir/?api=1&origin=${store.normalizedAddress || ''}&destination=${place.latitude},${place.longitude}' target='_blank'>Directions Here</a>`
                 const newMarker = new window.google.maps.Marker({
                     position:   markerPosition,
                     title:      place.address.locationName,

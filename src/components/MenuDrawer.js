@@ -6,12 +6,13 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import AboutIcon from '@material-ui/icons/HelpOutline';
-import MapIcon from '@material-ui/icons/Map';
 import LocalAtm from '@material-ui/icons/LocalAtm';
 import VoteIcon from '@material-ui/icons/HowToVote';
 import MenuSelection from './MenuSelection';
 import RepMenu from './RepMenu';
 import SenatorMenu from './SenatorMenu';
+import gMapIcon from '../icons/googleMap.svg';
+import poc from '../icons/crownsSmall.png';
 
 const useStyles = makeStyles({
     list:   {
@@ -30,13 +31,18 @@ const MenuDrawer = observer(() => {
         <div className={classes.list}>
             <Drawer anchor='left' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
               <List>
-                <MenuSelection text='pileofcrowns.org' value='home' />
+                <MenuSelection text='pileofcrowns.org' value='home' icon={<img src={poc}></img>}/>
                 <Divider />
                 <Divider />
                 <Divider />
                 {store.hasStateVotingInfo &&
                     <>
-                        <MenuSelection text={`${store.state} Voting Resources`} value='resources'/>
+                        <MenuSelection icon={<VoteIcon style={{color: '#3949ab'}}/>} text={`${store.state} Voting Resources`} value='resources'/>
+                    </>
+                }
+                {store.addressResolved && 
+                    <>
+                        <MenuSelection text='View My District' icon={<img src={gMapIcon}/>} value='map' />
                     </>
                 }
                 {store.hasDropOffLocations &&
@@ -54,14 +60,9 @@ const MenuDrawer = observer(() => {
                         <MenuSelection text={'Nov 3rd Polling Places'} value='polling'/>
                     </>
                 }
-                {store.addressResolved && 
-                    <>
-                        <MenuSelection text='View My District' icon={<MapIcon/>} value='map' />
-                        <Divider />
-                        <Divider />
-                        <Divider />
-                    </>
-                }
+                <Divider />
+                <Divider />
+                <Divider />
 
                 {store.senatorsLoaded && 
                     <>
@@ -79,8 +80,8 @@ const MenuDrawer = observer(() => {
                         <Divider/>
                     </>
                 }
-                <MenuSelection text='Support' icon={<LocalAtm/>} value='support'/>
-                <MenuSelection text='About this Site' icon={<AboutIcon/>} value='about'/>
+                <MenuSelection text='Support pileofcrowns.org' icon={<LocalAtm style={{color: '#7cb342'}}/>} value='support'/>
+                <MenuSelection text='About Site' icon={<AboutIcon/>} value='about'/>
               </List>
             </Drawer>
         </div>
