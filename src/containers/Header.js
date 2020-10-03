@@ -31,7 +31,7 @@ const Header = observer(() => {
 
     return (
         <>
-        <AppBar position="static" color='primary'>
+        <AppBar position="sticky" color='primary'>
             <Toolbar>
                 <IconButton edge='start' onClick={()=>store.menuOpen = true}>
                     <MenuIcon />

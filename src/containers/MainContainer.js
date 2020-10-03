@@ -11,7 +11,7 @@ const MainContainer = observer(() => {
     const store = useStore();
 
     return (
-        <div style={{margin: '10px 0'}}>
+        <div style={{margin: '10px 0px'}}>
             <div style={{display: (store.currentPage === 'map' ? 'inline' : 'none')}} >
                 <DistrictMap />
             </div>
