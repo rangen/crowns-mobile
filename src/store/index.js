@@ -30,6 +30,8 @@ export default class Store {
     @observable pollingPlaceMarkers = [];
     @observable earlyVoteMarkers = [];
     @observable dropOffMarkers = [];
+
+    @observable politicianTab = 'info';      // info finances tweets
     
     gMap = null;
     pollingMap = null;
@@ -77,6 +79,10 @@ export default class Store {
         this.getStateData();
     }
 
+    @action setPoliticianTab(value) {
+        this.politicianTab = value;
+    }
+
     @action setAddressInput(data = '') {
         this.setPage('home');
         window.history.pushState({}, null, '/');
@@ -110,6 +116,9 @@ export default class Store {
     @action setPage(value) {
         const store = this;
         store.menuOpen = false;
+        if (value === 'politician' && store.politicianTab !== 'info') {
+            store.politicianTab = 'info';
+        }
         
         if (value !== store.currentPage) {
             this.currentPage = value;

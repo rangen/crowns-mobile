@@ -31,7 +31,7 @@ const MenuDrawer = observer(() => {
         <div className={classes.list}>
             <Drawer anchor='left' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
               <List>
-                <MenuSelection text='pileofcrowns.org' value='home' icon={<img src={poc}></img>}/>
+                <MenuSelection text='pileofcrowns.org' value='home' icon={<img alt='' src={poc}></img>}/>
                 <Divider />
                 <Divider />
                 <Divider />
@@ -42,7 +42,7 @@ const MenuDrawer = observer(() => {
                 }
                 {store.addressResolved && 
                     <>
-                        <MenuSelection text='View My District' icon={<img src={gMapIcon}/>} value='map' />
+                        <MenuSelection text='View My District' icon={<img alt='' src={gMapIcon}/>} value='map' />
                     </>
                 }
                 {store.hasDropOffLocations &&

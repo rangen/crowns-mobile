@@ -10,18 +10,18 @@ import FinancialInfo from '../components/FinancialInfo';
 import Tweets from '../components/Tweets';
 
 const Politician = observer(() => {
-    const [value, setValue] = React.useState('info');
     const store = useStore();
-    
+    const polTab = store.politicianTab;
+
     return (
         <>
-        {value === 'info' && <CandidateInfo/>} 
-        {value === 'finances' && <FinancialInfo/>} 
-        {value === 'tweets' && <Tweets/>} 
+        {polTab === 'info' && <CandidateInfo/>} 
+        {polTab === 'finances' && <FinancialInfo/>} 
+        {polTab === 'tweets' && <Tweets/>} 
         <BottomNavigation
-            value={value}
+            value={polTab}
             onChange={(event, newValue) => {
-                setValue(newValue);
+                store.setPoliticianTab(newValue);
             }}
             style={{
                 width: '100%',
