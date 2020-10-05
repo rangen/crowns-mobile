@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    zIndex: 1000
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    zIndex: 1900
   },
   drawerPaper: {
     width: drawerWidth,
@@ -47,7 +47,7 @@ const FixedMenu = observer(() => {
     return (
         <div className={classes.list}>
             <Drawer anchor='left' variant='permanent' className={classes.drawer} open>
-              <List>
+              <List style={{top: 70}}>
                 <MenuSelection text='pileofcrowns.org' value='home' icon={<img alt='' src={poc}></img>}/>
                 <Divider />
                 <Divider />

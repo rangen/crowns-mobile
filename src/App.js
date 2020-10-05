@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import MenuDrawer from './components/MenuDrawer';
 import FixedMenu from './components/FixedMenu';
-import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Header from './containers/Header';
 import MainContainer from './containers/MainContainer';
@@ -73,18 +72,14 @@ const App = () => {
     <StoreProvider store={store}>
       <Header />
       <Hidden only={['md','lg', 'xl']}>
-        <MainContainer />
         <MenuDrawer />
+        <MainContainer />
       </Hidden>
       <Hidden only={['xs', 'sm']}>
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <FixedMenu />
-          </Grid>
-          <Grid item xs={9}>
+        <FixedMenu />
+          <div style={{marginLeft: '400px'}}>
             <MainContainer />
-          </Grid>
-        </Grid>
+          </div>
       </Hidden>
     </StoreProvider>
   );

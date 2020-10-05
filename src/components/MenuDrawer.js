@@ -30,7 +30,7 @@ const MenuDrawer = observer(() => {
     return (
         <div className={classes.list}>
             <Drawer anchor='left' open={store.menuOpen} onClose={()=>store.menuOpen = false}>
-              <List>
+              <List style={{top: 60}}>
                 <MenuSelection text='pileofcrowns.org' value='home' icon={<img alt='' src={poc}></img>}/>
                 <Divider />
                 <Divider />

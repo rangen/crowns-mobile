@@ -1,6 +1,6 @@
 import React from 'react'
-import { useStore } from '../store';
-import indices from '../misc/cookIndices';
+// import { useStore } from '../store';
+// import indices from '../misc/cookIndices';
 
 // const Home = () => {
 //     const store = useStore();

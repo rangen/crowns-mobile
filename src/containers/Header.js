@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import EditIcon from '@material-ui/icons/Edit';
+import Hidden from '@material-ui/core/Hidden';
 import { observer } from 'mobx-react';
 import { useStore } from '../store';
 
@@ -31,11 +32,13 @@ const Header = observer(() => {
 
     return (
         <>
-        <AppBar position="sticky" color='primary'>
+        <AppBar position="sticky" color='primary' style={{zIndex: 2000}}>
             <Toolbar>
-                <IconButton edge='start' onClick={()=>store.menuOpen = true}>
-                    <MenuIcon />
-                </IconButton>
+                <Hidden only={['md', 'lg', 'xl']}>
+                    <IconButton edge='start' onClick={()=>store.menuOpen = true}>
+                        <MenuIcon />
+                    </IconButton>
+                </Hidden>
                 {store.addressRegion && <Typography>
                     {store.addressRegion}
                     </Typography>}
