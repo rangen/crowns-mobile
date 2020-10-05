@@ -7,7 +7,7 @@ import states from '../misc/states';
 
 export default class Store {
     @observable normalizedAddress = '';
-    @observable addressInput = '3920 Tennyson St, Denver, CO 80212';
+    @observable addressInput = '';
     @observable checkingAddress = false;
     @observable retrievingData = false;
     @observable state = null;
@@ -95,8 +95,10 @@ export default class Store {
         this.reps = [];
         this.senators = [];
         this.geoJSON = null;
+        this.selectedPolitician = null;
+        this.stateVotingInfo = null;
         this.mapSecondaryView = null;
-        this.earlyVoteMarkers = [];
+        this.earlyVoteMarkers = [];   // do we need to remove first?
         this.pollingPlaceMarkers = [];
         this.dropOffMarkers = [];
     }
@@ -119,7 +121,7 @@ export default class Store {
         if (value === 'politician' && store.politicianTab !== 'info') {
             store.politicianTab = 'info';
         }
-        
+
         if (value !== store.currentPage) {
             this.currentPage = value;
         }

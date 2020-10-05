@@ -6,6 +6,7 @@ import Politician from './Politician';
 import Donate from './Donate';
 import VotingResources from '../components/VotingResources';
 import SecondaryMap from '../components/SecondaryMap';
+import Home from '../containers/Home';
 
 const MainContainer = observer(() => {
     const store = useStore();
@@ -18,7 +19,7 @@ const MainContainer = observer(() => {
             <div style={{display: (store.currentPage === 'secondarymap' ? 'inline' : 'none')}} >
                 <SecondaryMap />
             </div>
-            {store.currentPage === 'home' && <>Home</>}
+            {store.currentPage === 'home' && <Home/>}
             {store.currentPage === 'support' && <Donate/>}
             {store.currentPage === 'politician' && <><Politician/></>}
             {store.currentPage === 'about' && <>About yada yada!</>}
