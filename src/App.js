@@ -78,7 +78,7 @@ const App = () => {
       <Hidden only={['xs', 'sm']}>
         <FixedMenu />
           <div style={{marginLeft: '400px'}}>
-            <MainContainer />
+            <MainContainer/>
           </div>
       </Hidden>
     </StoreProvider>
