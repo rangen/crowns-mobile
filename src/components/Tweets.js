@@ -1,6 +1,6 @@
 import React from 'react'
 import { TwitterTweetEmbed as Embed } from 'react-twitter-embed';
-import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { Select, MenuItem, InputLabel } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import { useStore } from '../store';
 
@@ -16,7 +16,7 @@ const Tweets = observer(() => {
     const handleSelect = event => {
         store.tweetMonthCode = event.target.value;
     }
-
+    console.log('rendering tweet container');
     return (
         <>
             <div>
@@ -25,7 +25,7 @@ const Tweets = observer(() => {
                     {Array.from(store.selectedPolitician.tweetMonths).map(month=><MenuItem value={month}>{decodeMonth(month)}</MenuItem>)}
                 </Select>
             </div>
-            {store.tweetsToDisplay.map(t=><Embed options={{'align': 'center'}} tweetId={t.snowflake_id}/>)}
+            {store.tweetsToDisplay.map(t=><Embed key={t.snowflake_id} options={{'align': 'center'}} tweetId={t.snowflake_id}/>)}
         </>
     )
 });

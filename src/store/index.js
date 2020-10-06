@@ -170,6 +170,13 @@ export default class Store {
         }
     );
 
+    setInitialTweetsToDisplay = reaction(
+        () => [this.tweetMonthCode, this.selectedPolitician], ([code, pol]) => {
+            if (!code) return;
+            this.tweetsToDisplay = this.selectedPolitician.tweets.filter(t=>t.monthCode === this.tweetMonthCode).slice(0, 10);
+        }
+    );
+
     fillColor = (cookIndex) => {
         let index;
     
