@@ -3,6 +3,17 @@ const JSON_BUCKET = 'https://pile-of-crowns.s3.us-east-2.amazonaws.com/'
 const getDistrictData = async (state, district) => {
     let response = await fetch(JSON_BUCKET.concat(`${state}-${district}.json`));
     let json = await response.json();
+    json.reps.forEach(rep=>{ //Transform Date string back into Date object
+        if (rep.tweets) {
+            rep.tweetMonths = new Set();
+            rep.tweets.forEach(tweet=>{
+                tweet.created = new Date(tweet.created);
+                const encoding = `${tweet.created.getMonth()}-${tweet.created.getFullYear()}`;
+                tweet.monthCode = encoding;
+                rep.tweetMonths.add(encoding)
+            });
+        }
+    })
     return json.reps;
 }
 
@@ -10,6 +21,17 @@ const getStateData = async state => {
     let response = await fetch(JSON_BUCKET.concat(`${state}.json`));
     if (!response.ok) return [];  //Refactor to not check for non-Senate voting states
     let json = await response.json();
+    json.senators.forEach(sen=>{
+        if (sen.tweets) {
+            sen.tweetMonths = new Set();
+            sen.tweets.forEach(tweet=>{
+                tweet.created = new Date(tweet.created);
+                const encoding = `${tweet.created.getMonth()}-${tweet.created.getFullYear()}`;
+                tweet.monthCode = encoding;
+                sen.tweetMonths.add(encoding)
+            });
+        }
+    })
     return json.senators;
 }
 const getDistrictGeoJSON = async (state, district) => {

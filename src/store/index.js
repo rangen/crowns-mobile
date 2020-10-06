@@ -19,6 +19,8 @@ export default class Store {
     @observable currentPage = 'home'; //home map support politician
     @observable addressRegion = null;
     @observable selectedPolitician = null;
+    @observable tweetMonthCode = null;
+    @observable tweetsToDisplay = [];
     @observable stateVotingInfo = null;
 
     @observable earlyVotingSites = null;
@@ -123,7 +125,7 @@ export default class Store {
         }
 
         if (value !== store.currentPage) {
-            this.currentPage = value;
+            store.currentPage = value;
         }
     }
 
