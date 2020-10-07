@@ -20,6 +20,7 @@ export default class Store {
     @observable addressRegion = null;
     @observable selectedPolitician = null;
     @observable tweetMonthCode = null;
+    @observable tweetPageIndex = null;
     @observable tweetsToDisplay = [];
     @observable stateVotingInfo = null;
 
@@ -37,6 +38,7 @@ export default class Store {
     
     gMap = null;
     pollingMap = null;
+    tweetsForSelectedMonth = [];
 
     checkAddress = flow(function* () {
         const store = this;
@@ -129,6 +131,13 @@ export default class Store {
         }
     }
 
+    @action changeTweetPageIndex(value) {
+        if (value !== this.tweetPageIndex) {
+            this.tweetPageIndex = value;
+            this.setSelectedTweets();
+        }
+    }
+
     @computed get senatorsLoaded() {return !!this.senators.length}
 
     @computed get repsLoaded() {return !!this.reps.length}
@@ -144,6 +153,8 @@ export default class Store {
     @computed get hasPollingPlaces() {return !!this.pollingPlaces}
 
     @computed get hasDropOffLocations() {return !!this.dropOffLocations}
+
+    @computed get polHasTweets() {return !!this.selectedPolitician.tweets}
 
 
     drawDistrict = reaction(
@@ -170,12 +181,18 @@ export default class Store {
         }
     );
 
-    setInitialTweetsToDisplay = reaction(
+    setTweetsForMonth = reaction(
         () => [this.tweetMonthCode, this.selectedPolitician], ([code, pol]) => {
             if (!code) return;
-            this.tweetsToDisplay = this.selectedPolitician.tweets.filter(t=>t.monthCode === this.tweetMonthCode).slice(0, 10);
+            this.tweetsForSelectedMonth = pol.tweets.filter(t=>t.monthCode === code);
+            this.setSelectedTweets();
         }
     );
+
+    setSelectedTweets = () => {
+        const page = this.tweetPageIndex || 0;
+        this.tweetsToDisplay = this.tweetsForSelectedMonth.slice(page * 10, page * 10 + 10);
+    }
 
     fillColor = (cookIndex) => {
         let index;

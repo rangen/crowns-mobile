@@ -45,8 +45,10 @@ const Politician = observer(() => {
             >
                 <BottomNavigationAction label={store.selectedPolitician.candidate_name} icon={<PersonIcon/>} value='info' />
                 <BottomNavigationAction label='Financial Info' icon={<CashIcon/>} value='finances' />
-                <BottomNavigationAction label='Tweets' color='secondary' icon={<TwitterIcon/>} value='tweets' />
-            </BottomNavigation>
+                {store.polHasTweets && 
+                    <BottomNavigationAction label='Tweets' color='secondary' icon={<TwitterIcon/>} value='tweets' />
+                }
+                </BottomNavigation>
         </ThemeProvider>
         </>
     )

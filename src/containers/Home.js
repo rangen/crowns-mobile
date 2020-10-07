@@ -1,4 +1,5 @@
 import React from 'react'
+import { Box, Typography } from '@material-ui/core';
 // import { useStore } from '../store';
 // import indices from '../misc/cookIndices';
 
@@ -55,19 +56,30 @@ import React from 'react'
 
 export const Home = () => {
   return (
-    <>
-      <p>Ready to cast your vote November 3rd?</p>
-      <p>Stay informed regarding an equally important part of the democratic process: electing your Congressional representatives</p>
-      <p>To get started, enter your address above and:</p>
+    <Box style={{marginTop: 50}}>
+      <Typography variant='h3'>Ready to vote November 3rd?</Typography>
+      <br />
+      <Typography variant='h5'>Your Presidential vote might be decided, but let's talk about Congress</Typography>
       <ul>
-        <li>See what your unique Congressional district looks like (Did you know the US has 435 of them?)</li>
-        <li>Learn who will be on your personal ballot for the House of Representatives (and for 34 states, the Senate)</li>
-        <li>Browse Tweets from your candidates to see what issues they're addressing</li>
-        <li>View financial donor summaries for the candidates</li>
-        <li>Find early voting sites, ballot drop-off locations and Election Day polling places near you (as data becomes available)</li>
-
+        <li>
+          <Typography>See what your unique Congressional district looks like (Did you know the US has 435 of them?)</Typography>
+        </li>
+        <li>
+          <Typography>Learn who will be on your personal ballot for the House of Representatives (and for 34 states, the Senate)</Typography>
+        </li>
+        <li>
+          <Typography>Browse Tweets from your candidates to see what issues they're addressing</Typography>
+        </li>
+        <li>
+          <Typography>View financial donor summaries for the candidates</Typography>
+        </li>
       </ul>
-    </>
+      <br />
+      <Typography variant='h5'>Find out where you can vote</Typography>
+      <ul><li>
+        <Typography>Find early voting sites, ballot drop-off locations and Election Day polling places near you (as data becomes available)</Typography>
+      </li></ul>
+    </Box>
   )
 }
 
