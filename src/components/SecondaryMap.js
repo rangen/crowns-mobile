@@ -33,7 +33,7 @@ const SecondaryMap = observer(() => {
         }
         
         let bounds = new window.google.maps.LatLngBounds();
-        for (let marker of mapMarkers) {
+        for (let marker of mapMarkers.slice(0,25)) {  //extract to ENV variable?
             bounds.extend(marker.position);
             window.setTimeout(()=>marker.setMap(store.pollingMap), 333);
         }

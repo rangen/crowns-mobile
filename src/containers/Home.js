@@ -79,6 +79,13 @@ export const Home = () => {
       <ul><li>
         <Typography>Find early voting sites, ballot drop-off locations and Election Day polling places near you (as data becomes available)</Typography>
       </li></ul>
+      <br />
+      <br />
+      <br />
+      <Typography variant='h5'>Enter your address above to get started!</Typography>
+      <ul><li>
+        <Typography>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' target="_blank"> The Voting Info Project</a>. If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
+      </li></ul>
     </Box>
   )
 }
