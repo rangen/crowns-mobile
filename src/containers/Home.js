@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Hidden } from '@material-ui/core';
 // import { useStore } from '../store';
 // import indices from '../misc/cookIndices';
 
@@ -56,37 +56,76 @@ import { Box, Typography } from '@material-ui/core';
 
 export const Home = () => {
   return (
-    <Box style={{marginTop: 50}}>
-      <Typography variant='h3'>Ready to vote November 3rd?</Typography>
-      <br />
-      <Typography variant='h5'>Your Presidential vote might be decided, but let's talk about Congress</Typography>
-      <ul>
-        <li>
-          <Typography>See what your unique Congressional district looks like (Did you know the US has 435 of them?)</Typography>
-        </li>
-        <li>
-          <Typography>Learn who will be on your personal ballot for the House of Representatives (and for 34 states, the Senate)</Typography>
-        </li>
-        <li>
-          <Typography>Browse Tweets from your candidates to see what issues they're addressing</Typography>
-        </li>
-        <li>
-          <Typography>View financial donor summaries for the candidates</Typography>
-        </li>
-      </ul>
-      <br />
-      <Typography variant='h5'>Find out where you can vote</Typography>
-      <ul><li>
-        <Typography>Find early voting sites, ballot drop-off locations and Election Day polling places near you (as data becomes available)</Typography>
-      </li></ul>
-      <br />
-      <br />
-      <br />
-      <Typography variant='h5'>Enter your address above to get started!</Typography>
-      <ul><li>
-        <Typography>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' target="_blank"> The Voting Info Project</a>. If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
-      </li></ul>
-    </Box>
+    <>
+      <Hidden only={['sm', 'xs']}>
+        <Box style={{marginTop: 50, maxWidth: 800}}>
+          <Typography variant='h3'>Ready to vote Nov 3rd?</Typography>
+          <br />
+          <Typography variant='h5'>Your vote for President might be decided, but your Congressional vote(s) are also important</Typography>
+          <ul>
+            <li>
+              <Typography>See what your unique Congressional district looks like (Did you know the US has 435 of them?)</Typography>
+            </li>
+            <li>
+              <Typography>Learn who will be on your personal ballot for the House of Representatives (and for 34 states, the Senate)</Typography>
+            </li>
+            <li>
+              <Typography>Browse Tweets from your candidates to see what issues they're addressing</Typography>
+            </li>
+            <li>
+              <Typography>View financial donor summaries for the candidates</Typography>
+            </li>
+          </ul>
+          <br />
+          <Typography variant='h5'>Find out where you can vote</Typography>
+          <ul><li>
+            <Typography>Find early voting sites, ballot drop-off locations and Election Day polling places near you (as data becomes available)</Typography>
+          </li></ul>
+        </Box>
+        <br />
+        <br />
+        <Box bgcolor='primary.main' style={{maxWidth: 700, padding: 20}}>
+          <Typography variant='h5'>Enter your address above to get started!</Typography>
+          <ul><li>
+            <Typography>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' target="_blank"> The Voting Info Project</a> If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
+          </li></ul>
+        </Box>
+      </Hidden>
+      <Hidden only={['md', 'lg', 'xl']}>
+        <Box style={{marginTop: 20, maxWidth: 500}}>
+          <Typography variant='h5'>Ready to vote Nov 3rd?</Typography>
+          <br />
+          <Typography variant='h6'>Your vote for President might be decided, but your Congressional vote(s) are also important</Typography>
+          <ul>
+            <li>
+              <Typography>See what your unique Congressional district looks like</Typography>
+            </li>
+            <li>
+              <Typography>Learn who will be on your personal ballot for the House (and for 34 states this election, the Senate)</Typography>
+            </li>
+            <li>
+              <Typography>Browse Tweets from your candidates</Typography>
+            </li>
+            <li>
+              <Typography>View financial summaries for your Congressional candidates</Typography>
+            </li>
+          </ul>
+          <Box bgcolor='primary.main' style={{maxWidth: 700, padding: 5}}>
+            <Typography variant='body1'>Enter an address above to get started</Typography>
+          </Box>
+          <br />
+          <Typography variant='h5'>Find out where you can vote</Typography>
+          <ul><li>
+            <Typography>Find early voting sites, ballot drop-off locations and Election Day polling places near you (as data becomes available)</Typography>
+          </li></ul>
+        </Box>
+        <Box bgcolor='primary.main' style={{maxWidth: 500, padding: 5}}>
+          <ul><li>
+            <Typography variant='body2'>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' target="_blank"> The Voting Info Project.</a> If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
+          </li></ul>
+        </Box>
+      </Hidden>
+    </>
   )
 }
 
