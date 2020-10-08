@@ -87,7 +87,7 @@ export const Home = () => {
         <Box bgcolor='primary.main' style={{maxWidth: 700, padding: 20}}>
           <Typography variant='h5'>Enter your address above to get started!</Typography>
           <ul><li>
-            <Typography>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' target="_blank"> The Voting Info Project</a> If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
+            <Typography>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' rel='noopener noreferrer' target="_blank"> The Voting Info Project</a> If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
           </li></ul>
         </Box>
       </Hidden>
@@ -121,7 +121,7 @@ export const Home = () => {
         </Box>
         <Box bgcolor='primary.main' style={{maxWidth: 500, padding: 5}}>
           <ul><li>
-            <Typography variant='body2'>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' target="_blank"> The Voting Info Project.</a> If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
+            <Typography variant='body2'>Info on polling places is provided by <a href='https://www.votinginfoproject.org/' rel='noopener noreferrer' target="_blank"> The Voting Info Project.</a> If your address doesn't link to any polling place results, check back soon as results will update daily </Typography>
           </li></ul>
         </Box>
       </Hidden>

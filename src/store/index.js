@@ -16,7 +16,7 @@ export default class Store {
     @observable senators = [];
     @observable geoJSON = null;
     @observable menuOpen = false;
-    @observable currentPage = 'home'; //home map support politician
+    @observable currentPage = 'about'; //home map support politician
     @observable addressRegion = null;
     @observable selectedPolitician = null;
     @observable tweetMonthCode = null;

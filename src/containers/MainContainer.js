@@ -7,6 +7,7 @@ import Donate from './Donate';
 import VotingResources from '../components/VotingResources';
 import SecondaryMap from '../components/SecondaryMap';
 import Home from '../containers/Home';
+import About from './About';
 
 const MainContainer = observer(() => {
     const store = useStore();
@@ -21,8 +22,8 @@ const MainContainer = observer(() => {
             </div>
             {store.currentPage === 'home' && <Home/>}
             {store.currentPage === 'support' && <Donate/>}
-            {store.currentPage === 'politician' && <><Politician/></>}
-            {store.currentPage === 'about' && <>About yada yada!</>}
+            {store.currentPage === 'politician' && <Politician/>}
+            {store.currentPage === 'about' && <About/>}
             {store.currentPage === 'resources' && <VotingResources/>}
         </div>
     );
