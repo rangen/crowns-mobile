@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import MenuDrawer from './components/MenuDrawer';
 import FixedMenu from './components/FixedMenu';
@@ -8,6 +8,7 @@ import MainContainer from './containers/MainContainer';
 import Store, { StoreProvider } from './store';
 import validDistricts from './misc/districts';
 import states from './misc/states';
+import analyze from 'react-ga';
 
 const store = new Store();
 
@@ -23,18 +24,30 @@ const App = () => {
       store.state = path[1];
       store.district = path[2];
       store.addressRegion = buildDistrictString(path[1], path[2]);
+      store.sendEvent('URL Passed', store.addressRegion);
       store.addressInput = '';
       store.getVoterInfo();
       store.fetchS3Data();
     } else {
-      window.history.pushState({}, null, '/')
+      window.history.pushState({}, null, '/');
+      store.sendEvent('Entry - No URL Passed');
     }
   }, [location.pathname]);
 
-  React.useEffect(() => {
-    checkIfURLPassed();
-  }, [checkIfURLPassed]);
+  useEffect(() => {
+    store.analyze = analyze;
+    const options = {
+      titleCase: false,
+      siteSpeedSampleRate: 100,
+      alwaysSendReferrer: true
+    }
+    
+    store.analyze.initialize('UA-180153288-1', options);
 
+    checkIfURLPassed();
+    
+  }, [checkIfURLPassed]);
+  
   const buildDistrictString = (state, district) => {
     let num;
     switch (district) {

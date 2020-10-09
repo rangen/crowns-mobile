@@ -15,7 +15,13 @@ const Tweets = observer(() => {
         return `${months[month]} ${year}`
     }
 
+    const handlePageChange = (event, value) => {
+        if (value === store.tweetPageIndex) return; 
+        store.changeTweetPageIndex(value-1)
+    }
+
     const handleSelect = event => {
+        store.changeTweetPageIndex(0);
         store.tweetMonthCode = event.target.value;
     }
     console.log('rendering tweet container');
@@ -31,7 +37,7 @@ const Tweets = observer(() => {
                 </div>
                 <div>
                     <FormHelperText>Page:</FormHelperText>
-                    <Pagination onChange={(e, v)=>store.changeTweetPageIndex(v-1)} count={Math.ceil(store.tweetsForSelectedMonth.length / 10)} />
+                    <Pagination onChange={handlePageChange} page={store.tweetPageIndex + 1} count={Math.ceil(store.tweetsForSelectedMonth.length / 10)} />
                 </div>
             </div>
             {store.tweetsToDisplay.map(t=>

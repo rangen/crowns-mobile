@@ -11,7 +11,7 @@ const MenuSelection = observer(({ keyName, icon, secIcon, text, value, politicia
     const handleClick = () => {
         if (politician) {
             store.selectedPolitician = politician.isSenator ? store.senators.find(s=>s.id === politician.id) : store.reps.find(r=>r.id === politician.id);
-            
+            store.sendEvent('Select Pol', store.selectedPolitician.candidate_name);
             store.tweetMonthCode = store.selectedPolitician.tweetMonths && store.selectedPolitician.tweetMonths.values().next().value;  //To set initial value of select field on Tweet Page with newest month tweeted
             store.tweetPageIndex = 0;
         };

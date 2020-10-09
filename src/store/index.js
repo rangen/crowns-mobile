@@ -16,7 +16,7 @@ export default class Store {
     @observable senators = [];
     @observable geoJSON = null;
     @observable menuOpen = false;
-    @observable currentPage = 'about'; //home map support politician
+    @observable currentPage = 'home'; //home map support politician
     @observable addressRegion = null;
     @observable selectedPolitician = null;
     @observable tweetMonthCode = null;
@@ -35,10 +35,16 @@ export default class Store {
     @observable dropOffMarkers = [];
 
     @observable politicianTab = 'info';      // info finances tweets
+
+    clientIP = null;
+    clientLocation = null;
+    addressesSearched = [];
     
     gMap = null;
     pollingMap = null;
     tweetsForSelectedMonth = [];
+
+    analyze = null; //React Google Analytics object
 
     checkAddress = flow(function* () {
         const store = this;
@@ -53,11 +59,12 @@ export default class Store {
             store.normalizedAddress = addressReply.normalizedAddress;
             store.addressRegion = addressReply.addressRegion;
             window.history.pushState({}, null, `/district/${store.state}/${store.district}`)
-
+            store.sendEvent('Address Resolved', `${store.addressInput} : ${store.addressRegion}`);
             yield store.getVoterInfo();
 
             store.fetchS3Data();
         } else {
+            store.sendEvent('Address Failed', store.addressInput);
             store.addressError = true;
         }
 
@@ -84,7 +91,22 @@ export default class Store {
     }
 
     @action setPoliticianTab(value) {
+        if (this.politicianTab === value) return;
+        this.sendPageView(`${this.selectedPolitician.candidate_name}/${value}`); 
         this.politicianTab = value;
+    }
+
+    @action sendEvent(title, value) {
+        if (process.env.REACT_APP_SKIP_ANALYTICS) return;
+        this.analyze.event({
+            category:   title,
+            action: value
+        });
+    }
+
+    @action sendPageView(page) {
+        if (process.env.REACT_APP_SKIP_ANALYTICS) return;
+        this.analyze.pageview(`/${page}`);
     }
 
     @action setAddressInput(data = '') {
@@ -127,15 +149,15 @@ export default class Store {
         }
 
         if (value !== store.currentPage) {
+            store.sendPageView(value);
             store.currentPage = value;
         }
     }
 
     @action changeTweetPageIndex(value) {
-        if (value !== this.tweetPageIndex) {
-            this.tweetPageIndex = value;
-            this.setSelectedTweets();
-        }
+        this.sendEvent('Paging Tweets', `${this.selectedPolitician.candidate_name}  ${this.state}-${this.district} (${this.tweetMonthCode})`);
+        this.tweetPageIndex = value;
+        this.setSelectedTweets();
     }
 
     @computed get senatorsLoaded() {return !!this.senators.length}
@@ -243,7 +265,6 @@ export default class Store {
         }
 
         if (store.dropOffLocations) {
-            debugger;
             for (let [index, place] of store.dropOffLocations.entries()) {
                 const markerPosition = {lat:    place.latitude, lng:    place.longitude}
                 if (!markerPosition.lat || !markerPosition.lng) continue;
