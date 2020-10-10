@@ -36,7 +36,8 @@ export default class Store {
 
     @observable politicianTab = 'info';      // info finances tweets
 
-    @observable toastOpen = false;
+    @observable menuToastOpen = false;
+    @observable polToastOpen = false;
 
     clientIP = null;
     clientLocation = null;
@@ -64,7 +65,7 @@ export default class Store {
             store.sendEvent('Address Resolved', `${store.addressInput} : ${store.addressRegion}`);
             yield store.getVoterInfo();
             store.fetchS3Data();
-            store.toastOpen = true;
+            store.menuToastOpen = true;
         } else {
             store.sendEvent('Address Failed', store.addressInput);
             store.addressError = true;

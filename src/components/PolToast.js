@@ -3,30 +3,30 @@ import { Snackbar, SnackbarContent, Hidden } from '@material-ui/core';
 import { useStore } from '../store';
 import { observer } from 'mobx-react';
 
-const Toast = observer(() => {
+const PolToast = observer(() => {
     const store = useStore();
 
     const handleClose = (event, reason) => {
-        store.toastOpen = false;
+        store.polToastOpen = false;
     }
 
     return (
         <>
             <Hidden only={['md', 'lg', 'xl']}>
-                {store.toastOpen && 
+                {store.polToastOpen && 
                     <Snackbar
-                    style={{backgroundColor: '#808080'}}
-                    anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                    }}
-                    open={true}
-                    autoHideDuration={3500}
-                    onClose={handleClose}
+                        style={{marginBottom: 60}}
+                        anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                        }}
+                        open={true}
+                        autoHideDuration={3500}
+                        onClose={handleClose}
                 >
                     <SnackbarContent
                         style={{backgroundColor: '#e0f7fa', color: '#121858'}}
-                        message='Address found! Swipe from left side to open menu'
+                        message='View Financial Info or Tweets using tabs below'
                     />
                     </Snackbar>
                 }
@@ -35,4 +35,4 @@ const Toast = observer(() => {
     )
 });
 
-export default Toast;
+export default PolToast;

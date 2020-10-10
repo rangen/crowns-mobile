@@ -14,6 +14,7 @@ const MenuSelection = observer(({ keyName, icon, secIcon, text, value, politicia
             store.sendEvent('Select Pol', store.selectedPolitician.candidate_name);
             store.tweetMonthCode = store.selectedPolitician.tweetMonths && store.selectedPolitician.tweetMonths.values().next().value;  //To set initial value of select field on Tweet Page with newest month tweeted
             store.tweetPageIndex = 0;
+            store.polToastOpen = true;
         };
         if (['polling', 'earlyvoting', 'dropoff'].includes(value)) {
             if (value !== store.mapSecondaryView) {

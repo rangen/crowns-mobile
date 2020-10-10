@@ -8,7 +8,8 @@ import VotingResources from '../components/VotingResources';
 import SecondaryMap from '../components/SecondaryMap';
 import Home from '../containers/Home';
 import About from './About';
-import Toast from '../components/Toast';
+import MenuToast from '../components/MenuToast';
+import PolToast from '../components/PolToast';
 
 const MainContainer = observer(() => {
     const store = useStore();
@@ -26,7 +27,8 @@ const MainContainer = observer(() => {
             {store.currentPage === 'politician' && <Politician/>}
             {store.currentPage === 'about' && <About/>}
             {store.currentPage === 'resources' && <VotingResources/>}
-            <Toast/>
+            <MenuToast/>
+            <PolToast/>
         </div>
     );
 });

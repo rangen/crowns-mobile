@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from '../store';
 import { makeStyles } from '@material-ui/styles';
-import Drawer from '@material-ui/core/SwipeableDrawer';
+import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import AboutIcon from '@material-ui/icons/HelpOutline';
@@ -29,7 +29,11 @@ const MenuDrawer = observer(() => {
 
     return (
         <div className={classes.list}>
-            <Drawer anchor='left' open={store.menuOpen} onOpen={()=>store.menuOpen=true} onClose={()=>store.menuOpen = false}>
+            <Drawer anchor='left' 
+                open={store.menuOpen} 
+                onOpen={()=>store.menuOpen=true} 
+                onClose={()=>store.menuOpen = false}
+                >
               <List style={{top: 60}}>
                 <MenuSelection text='pileofcrowns.org' value='home' icon={<img alt='' src={poc}></img>}/>
                 <Divider />
