@@ -47,7 +47,7 @@ const checkVoterInfo = async (address) => {
 }
 
 const checkAddressInput = async input => {
-    console.time('address')
+    console.time('address');
     let result = {ok: false};
 
     let response = await fetch(`https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=${input}&levels=country&roles=legislatorLowerBody&roles=legislatorUpperBody&key=${process.env.REACT_APP_GOOGLE_CIVIC}`)

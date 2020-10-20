@@ -3,8 +3,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import Hidden from '@material-ui/core/Hidden';
@@ -22,7 +23,6 @@ const Header = observer(() => {
 
     const handleReset = () => {
         store.setAddressInput();
-        store.gMap.data.forEach((f)=>store.gMap.data.remove(f))
     }
 
     const handleSearch = () => {
@@ -42,7 +42,7 @@ const Header = observer(() => {
                 {store.addressRegion && <Typography>
                     {store.addressRegion}
                     </Typography>}
-                {!store.addressResolved && <TextField 
+                {/* {!store.addressResolved && <Autocomplete 
                     value={store.addressInput} 
                     onChange={handleChange} 
                     placeholder='Enter street address'
@@ -51,7 +51,24 @@ const Header = observer(() => {
                     error={addressError}
                     helperText={addressError ? 'Could not locate address' : ''} 
                     variant='outlined'
-                    size='small'/>}
+                    size='small'/>} */}
+                {!store.addressResolved && <Autocomplete 
+                    placeholder='Enter street address'
+                    freeSolo
+                    style={{width: 500}}
+                    options={store.autocompleteSuggestions}
+                    renderInput={(params)=>
+                        <TextField 
+                            {...params} 
+                            value={store.addressInput} 
+                            onChange={handleChange}
+                            placeholder='Enter street address'
+                            variant='outlined'
+                            disabled={appBusy}
+                            error={addressError}
+                            helperText={addressError ? 'Could not locate address' : ''}
+                        />}
+                    />}
                 {/* Conditionally have editable field + search icon or Resolved Result + edit icon */}
                 {!store.addressResolved && <IconButton onClick={handleSearch} disabled={appBusy}>
                     <SearchIcon />

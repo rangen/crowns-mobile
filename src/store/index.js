@@ -39,9 +39,7 @@ export default class Store {
     @observable menuToastOpen = false;
     @observable polToastOpen = false;
 
-    clientIP = null;
-    clientLocation = null;
-    addressesSearched = [];
+    @observable autocompleteSuggestions = [];
     
     gMap = null;
     pollingMap = null;
@@ -53,6 +51,7 @@ export default class Store {
         const store = this;
 
         store.checkingAddress = true;
+        debugger;
         const addressReply = yield api.checkAddress(store.addressInput);
         store.checkingAddress = false;
 
@@ -112,24 +111,28 @@ export default class Store {
         this.analyze.pageview(`/${page}`);
     }
 
-    @action setAddressInput(data = '') {
-        this.setPage('home');
-        window.history.pushState({}, null, '/');
-        this.addressInput = data;
-        this.addressError = false;
-        this.state = null;
-        this.district = null; 
-        this.normalizedAddress = '';
-        this.addressRegion = null;
-        this.reps = [];
-        this.senators = [];
-        this.geoJSON = null;
-        this.selectedPolitician = null;
-        this.stateVotingInfo = null;
-        this.mapSecondaryView = null;
-        this.earlyVoteMarkers = [];   // do we need to remove first?
-        this.pollingPlaceMarkers = [];
-        this.dropOffMarkers = [];
+    @action setAddressInput(data) {
+        if (!data) {
+            this.setPage('home');
+            window.history.pushState({}, null, '/');
+            this.addressError = false;
+            this.state = null;
+            this.district = null; 
+            this.normalizedAddress = '';
+            this.addressRegion = null;
+            this.reps = [];
+            this.senators = [];
+            this.geoJSON = null;
+            this.selectedPolitician = null;
+            this.stateVotingInfo = null;
+            this.mapSecondaryView = null;
+            this.earlyVoteMarkers = [];   // do we need to remove first?
+            this.pollingPlaceMarkers = [];
+            this.dropOffMarkers = [];
+            this.autocompleteSuggestions = [];
+            this.gMap.data.forEach((f)=>this.gMap.data.remove(f))
+        }
+        this.addressInput = data | '';
     }
 
     @action async getDistrictData() {
