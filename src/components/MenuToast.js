@@ -28,7 +28,7 @@ const Toast = observer(() => {
                         style={{backgroundColor: '#e0f7fa', color: '#121858'}}
                         message={
                         <>
-                            <span style={{verticalAlign: 'middle'}}>Address found! View your candidates using <MenuIcon/>  upper left</span>
+                            <span style={{verticalAlign: 'middle'}}>Address found! View candidates using <MenuIcon/> button</span>
                         </>
                         }
                     />

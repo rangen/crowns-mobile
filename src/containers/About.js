@@ -24,10 +24,10 @@ const About = () => {
                                 <Typography>Congressional incumbency rates are normally over 90%</Typography>
                             </li>
                             <li>
-                                <Typography>Yet somehow, Congressional approval rates have been <b>below 40% for the last decade</b></Typography>
+                                <Typography>Despite this, Congressional approval rates have been <b>below 40% for the last decade</b></Typography>
                             </li>
                             <li>
-                                <Typography>Gerrmyandering and redistricting can be confusing and just visualizing your district is difficult</Typography>
+                                <Typography>Gerrymandering and redistricting can be confusing and just visualizing your district is difficult</Typography>
                             </li>
                             <li>
                                 <Typography>The primary process is confusing, and Congressional votes can unfortunately sometimes be an afterthought</Typography>
@@ -113,7 +113,7 @@ const About = () => {
                                 <Typography>Congressional incumbency rates are normally over 90%</Typography>
                             </li>
                             <li>
-                                <Typography>Yet somehow, Congressional approval rates have been <b>below 40% for the last decade</b></Typography>
+                                <Typography>Despite this, Congressional approval rates have been <b>below 40% for the last decade</b></Typography>
                             </li>
                             <li>
                                 <Typography>Gerrymandering and redistricting can be confusing and just visualizing your district is difficult</Typography>
