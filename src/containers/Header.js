@@ -61,7 +61,7 @@ const Header = observer(() => {
                                                     error={addressError}
                                                     helperText={addressError ? 'Could not locate address' : ''}
                                                      />}
-                        getOptionLabel={option=>option}
+                        getOptionLabel={option=> option ? option : ''}
                         options={store.autocompleteSuggestions}
                     />
                 }

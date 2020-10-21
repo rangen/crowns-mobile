@@ -210,7 +210,7 @@ export default class Store {
     );
 
     getPlaceSuggestions = reaction(()=>[this.addressInput, this.placesService], ([address, places]) => {
-        
+        if (!address || address.length < 3) return;
         places.getPlacePredictions({input: address, types: ['address'], componentRestrictions: {country: 'us'}}, this.handlePlaces);
     });
 
