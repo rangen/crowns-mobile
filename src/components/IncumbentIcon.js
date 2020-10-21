@@ -19,4 +19,4 @@ const IncumbentIcon = () => {
     )
 }
 
-export default IncumbentIcon
+export default IncumbentIcon;

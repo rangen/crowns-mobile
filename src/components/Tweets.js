@@ -1,6 +1,6 @@
 import React from 'react'
 import { TwitterTweetEmbed as Embed } from 'react-twitter-embed';
-import { Select, MenuItem, FormHelperText, Box } from '@material-ui/core';
+import { Select, MenuItem, FormHelperText, Box, Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { Pagination } from '@material-ui/lab';
 import { observer } from 'mobx-react';
@@ -27,19 +27,18 @@ const Tweets = observer(() => {
     console.log('rendering tweet container');
     return (
         <>
-            <div style={{display: 'flex'}}>
-                <div>
-                
+            <Grid container style={{display: 'flex', marginBottom: 25}}>
+                <Grid item s={12}>
                     <FormHelperText>Show tweets (and retweets) from:</FormHelperText>
                     <Select helperText={'Show tweets (and retweets) from:'} labelId='tweet-month-label' style={{minWidth: 225}} value={store.tweetMonthCode} onChange={handleSelect} >
                         {Array.from(store.selectedPolitician.tweetMonths).map(month=><MenuItem value={month}>{decodeMonth(month)}</MenuItem>)}
                     </Select>
-                </div>
-                <div>
+                </Grid>
+                <Grid item s={12}>
                     <FormHelperText>Page:</FormHelperText>
                     <Pagination onChange={handlePageChange} page={store.tweetPageIndex + 1} count={Math.ceil(store.tweetsForSelectedMonth.length / 10)} />
-                </div>
-            </div>
+                </Grid>
+            </Grid>
             {store.tweetsToDisplay.map(t=>
                 <Embed 
                     key={t.snowflake_id} 
