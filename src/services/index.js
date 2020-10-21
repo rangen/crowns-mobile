@@ -11,6 +11,7 @@ const getDistrictData = async (state, district) => {
                 const encoding = `${tweet.created.getMonth()}-${tweet.created.getFullYear()}`;
                 tweet.monthCode = encoding;
                 rep.tweetMonths.add(encoding)
+                rep.oldestMonth = encoding;
             });
         }
     })
@@ -29,6 +30,7 @@ const getStateData = async state => {
                 const encoding = `${tweet.created.getMonth()}-${tweet.created.getFullYear()}`;
                 tweet.monthCode = encoding;
                 sen.tweetMonths.add(encoding)
+                sen.oldestMonth = encoding;   //hacky but works  overwrite until it's the oldest value
             });
         }
     })
