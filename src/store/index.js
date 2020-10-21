@@ -206,8 +206,13 @@ export default class Store {
         });
 
         this.gMap.fitBounds(bounds);
+        this.makeItShake();
         }
     );
+
+    makeItShake() {
+        navigator.vibrate([150, 100, 100])
+    };
 
     getPlaceSuggestions = reaction(()=>[this.addressInput, this.placesService], ([address, places]) => {
         if (!address || address.length < 3) return;

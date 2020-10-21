@@ -14,7 +14,6 @@ const store = new Store();
 
 const App = () => {
   const location = useLocation();
-  
 
   const checkIfURLPassed = useCallback(() => {
     const path = location.pathname.split('/').filter(item=>item);
@@ -30,7 +29,7 @@ const App = () => {
       store.fetchS3Data();
     } else {
       window.history.pushState({}, null, '/');
-      store.sendEvent('Entry - No URL Passed');
+      store.sendEvent('Entry - No URL Passed', new Date().toLocaleTimeString());
     }
   }, [location.pathname]);
 
