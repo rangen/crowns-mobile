@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 const IncumbentIcon = () => {
     const [isOpen, setIsOpen] = useState(true);
 
-    setTimeout(()=>setIsOpen(false), 3000);
+    setTimeout(()=>setIsOpen(false), 3500);
 
     return (
         <Tooltip 

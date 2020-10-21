@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { EmojiPeople } from '@material-ui/icons';
 import { useStore } from '../store';
 import MenuSelection from './MenuSelection';
