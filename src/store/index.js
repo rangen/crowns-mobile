@@ -42,6 +42,7 @@ export default class Store {
     @observable autocompleteSuggestions = [];
     
     gMap = null;
+    placesService = null;
     pollingMap = null;
     tweetsForSelectedMonth = [];
 
@@ -51,7 +52,6 @@ export default class Store {
         const store = this;
 
         store.checkingAddress = true;
-        debugger;
         const addressReply = yield api.checkAddress(store.addressInput);
         store.checkingAddress = false;
 
@@ -209,6 +209,11 @@ export default class Store {
         }
     );
 
+    getPlaceSuggestions = reaction(()=>[this.addressInput, this.placesService], ([address, places]) => {
+        
+        places.getPlacePredictions({input: address, types: ['address'], componentRestrictions: {country: 'us'}}, this.handlePlaces);
+    });
+
     setTweetsForMonth = reaction(
         () => [this.tweetMonthCode, this.selectedPolitician], ([code, pol]) => {
             if (!code) return;
@@ -216,6 +221,11 @@ export default class Store {
             this.setSelectedTweets();
         }
     );
+    
+    handlePlaces = response => {
+        if (!Array.isArray(response)) return;
+        this.autocompleteSuggestions = response.map(p=>p.description);
+    }
 
     setSelectedTweets = () => {
         const page = this.tweetPageIndex || 0;

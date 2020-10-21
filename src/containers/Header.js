@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import Hidden from '@material-ui/core/Hidden';
@@ -17,8 +17,14 @@ const Header = observer(() => {
     const addressError = store.addressError;
     const appBusy = store.checkingAddress || store.retrievingData;
 
-    const handleChange = event => {
-        store.setAddressInput(event.target.value);
+    useEffect(()=> {
+        if (store.placesService || !window.google) return;
+        store.placesService = new window.google.maps.places.AutocompleteService();
+    })
+
+    const handleInput = async (event, value) => {
+        if (addressError) store.addressError = false;
+        store.addressInput = value;
     }
 
     const handleReset = () => {
@@ -26,6 +32,7 @@ const Header = observer(() => {
     }
 
     const handleSearch = () => {
+        if (!store.addressInput) return;   //no search on null / empty string / select cancel
         store.setPage('map');
         store.checkAddress();
     }
@@ -42,33 +49,22 @@ const Header = observer(() => {
                 {store.addressRegion && <Typography>
                     {store.addressRegion}
                     </Typography>}
-                {/* {!store.addressResolved && <Autocomplete 
-                    value={store.addressInput} 
-                    onChange={handleChange} 
-                    placeholder='Enter street address'
-                    fullWidth
-                    disabled={appBusy}
-                    error={addressError}
-                    helperText={addressError ? 'Could not locate address' : ''} 
-                    variant='outlined'
-                    size='small'/>} */}
                 {!store.addressResolved && <Autocomplete 
-                    placeholder='Enter street address'
-                    freeSolo
-                    style={{width: 500}}
-                    options={store.autocompleteSuggestions}
-                    renderInput={(params)=>
-                        <TextField 
-                            {...params} 
-                            value={store.addressInput} 
-                            onChange={handleChange}
-                            placeholder='Enter street address'
-                            variant='outlined'
-                            disabled={appBusy}
-                            error={addressError}
-                            helperText={addressError ? 'Could not locate address' : ''}
-                        />}
-                    />}
+                        freeSolo
+                        onInputChange={handleInput}
+                        onChange={handleSearch}
+                        value={store.addressInput}
+                        style={{width: 500}}
+                        renderInput={(params)=><TextField 
+                                                    {...params}
+                                                    placeholder = 'Enter street adddress'
+                                                    error={addressError}
+                                                    helperText={addressError ? 'Could not locate address' : ''}
+                                                     />}
+                        getOptionLabel={option=>option}
+                        options={store.autocompleteSuggestions}
+                    />
+                }
                 {/* Conditionally have editable field + search icon or Resolved Result + edit icon */}
                 {!store.addressResolved && <IconButton onClick={handleSearch} disabled={appBusy}>
                     <SearchIcon />
