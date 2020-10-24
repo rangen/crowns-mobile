@@ -129,6 +129,9 @@ export default class Store {
             this.earlyVoteMarkers = [];   // do we need to remove first?
             this.pollingPlaceMarkers = [];
             this.dropOffMarkers = [];
+            this.dropOffLocations = null;
+            this.earlyVotingSites = null;
+            this.pollingPlaces = null;
             this.autocompleteSuggestions = [];
             this.gMap.data.forEach((f)=>this.gMap.data.remove(f))
         }

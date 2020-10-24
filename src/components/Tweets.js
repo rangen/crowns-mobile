@@ -36,7 +36,7 @@ const Tweets = observer(() => {
                 <Grid item s={12}>
                     <FormHelperText>Show tweets (and retweets) from:</FormHelperText>
                     <Tooltip
-                        title={`View Tweets back to ${decodeMonth(store.selectedPolitician.oldestMonth)}`}
+                        title={`View tweets from /n${decodeMonth(store.selectedPolitician.oldestMonth)}`}
                         open={tooltipOpen}
                         placement={tooltipOrientation}
                         arrow
