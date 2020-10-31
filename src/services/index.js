@@ -36,6 +36,7 @@ const getStateData = async state => {
     })
     return json.senators;
 }
+
 const getDistrictGeoJSON = async (state, district) => {
     let response = await fetch(JSON_BUCKET.concat(`districts/${state}-${district}/shape.geojson`));
     let json = await response.json();

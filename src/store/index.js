@@ -99,6 +99,7 @@ export default class Store {
     }
 
     @action sendEvent(title, value) {
+        //use environment variable to skip analytics when in staging
         if (process.env.REACT_APP_SKIP_ANALYTICS) return;
         this.analyze.event({
             category:   title,
@@ -107,6 +108,7 @@ export default class Store {
     }
 
     @action sendPageView(page) {
+        //use environment variable to skip analytics when in staging
         if (process.env.REACT_APP_SKIP_ANALYTICS) return;
         this.analyze.pageview(`/${page}`);
     }
